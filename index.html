@@ -162,6 +162,40 @@
             border-top: 1px solid var(--border);
         }
 
+        /* Галерея */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 14px;
+            margin-top: 16px;
+        }
+        .trophy-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 18px 10px;
+            text-align: center;
+            font-size: 13px;
+            transition: border-color 0.2s, transform 0.2s;
+        }
+        .trophy-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+        .trophy-icon {
+            font-size: 32px;
+            margin-bottom: 6px;
+            display: block;
+        }
+        .trophy-card strong {
+            display: block;
+            font-size: 14px;
+        }
+        .trophy-card span {
+            color: var(--text-secondary);
+            font-size: 12px;
+        }
+
         @media print {
             .btn, .contact-links { display: none; }
         }
@@ -204,6 +238,36 @@
         </div>
     </section>
 
+    <!-- Мои платины -->
+    <section>
+        <div class="container">
+            <h2>Мои платины</h2>
+            <p style="margin-bottom: 8px;">Несколько примеров из того, что уже сделано</p>
+            <div class="gallery">
+                <div class="trophy-card">
+                    <span class="trophy-icon">🏆</span>
+                    <strong>Spider-Man 2</strong>
+                    <span>Платина за 3 дня</span>
+                </div>
+                <div class="trophy-card">
+                    <span class="trophy-icon">🏆</span>
+                    <strong>Ratchet & Clank</strong>
+                    <span>Платина за 4 дня</span>
+                </div>
+                <div class="trophy-card">
+                    <span class="trophy-icon">🏆</span>
+                    <strong>Ghost of Tsushima</strong>
+                    <span>Платина за 6 дней</span>
+                </div>
+                <div class="trophy-card">
+                    <span class="trophy-icon">🏆</span>
+                    <strong>Horizon Forbidden West</strong>
+                    <span>Платина за 5 дней</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- FAQ -->
     <section>
         <div class="container">
@@ -234,8 +298,8 @@
                 <h2>Свяжитесь со мной</h2>
                 <p>Пишите в любое время, отвечаю обычно в течение часа.</p>
                 <div class="contact-links">
-                    <a class="contact-link" href="https://t.me/ТВОЙ_ЮЗЕРНЕЙМ" target="_blank">
-                        Telegram: platinum_boost
+                    <a class="contact-link" href="https://t.me/platinum_boost" target="_blank">
+                        Telegram: @platinum_boost
                     </a>
                     <a class="contact-link" href="#">
                         Профиль на Авито
@@ -252,5 +316,7 @@
         </div>
     </footer>
 
+</body>
+</html>
 </body>
 </html>
