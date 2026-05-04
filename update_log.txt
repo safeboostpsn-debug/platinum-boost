@@ -10,3 +10,7 @@
 [2026-05-04 16:27:13] Запрашиваю https://stratege.ru/playstation/users/SASHOK911/...
 [2026-05-04 16:27:13] Ошибка запроса: 403 Client Error: Forbidden for url: https://stratege.ru/playstation/users/SASHOK911/
 [2026-05-04 16:27:13] Платины не найдены
+[2026-05-04 16:29:27] ========== ЗАПУСК ==========
+[2026-05-04 16:29:27] Запрашиваю https://stratege.ru/playstation/users/sana17/...
+[2026-05-04 16:29:28] Ошибка запроса: 403 Client Error: Forbidden for url: https://stratege.ru/playstation/users/sana17/
+[2026-05-04 16:29:28] Платины не найдены. Проверь, открыт ли профиль на stratege.ru
