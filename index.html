@@ -14,6 +14,7 @@
             --accent-hover: #1d4ed8;
             --border: #e5e7eb;
             --radius: 10px;
+            --green: #22c55e;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -26,246 +27,163 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        .container {
-            max-width: 700px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
+        .container { max-width: 700px; margin: 0 auto; padding: 0 20px; }
 
         /* Навигация */
         nav {
-            text-align: center;
-            padding: 18px 0;
+            text-align: center; padding: 18px 0;
             border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            background: var(--bg);
-            z-index: 10;
+            position: sticky; top: 0; background: var(--bg); z-index: 10;
         }
         nav a {
-            margin: 0 14px;
-            font-weight: 500;
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 15px;
-            padding-bottom: 4px;
-            transition: color 0.15s, border-color 0.15s;
-            border-bottom: 2px solid transparent;
+            margin: 0 14px; font-weight: 500; color: var(--text-secondary);
+            text-decoration: none; font-size: 15px; padding-bottom: 4px;
+            transition: color 0.15s, border-color 0.15s; border-bottom: 2px solid transparent;
         }
-        nav a:hover,
-        nav a.active {
-            color: var(--accent);
-            border-bottom-color: var(--accent);
-        }
+        nav a:hover, nav a.active { color: var(--accent); border-bottom-color: var(--accent); }
 
-        /* Страницы */
         .page { display: none; }
         .page.active { display: block; }
 
-        section {
-            padding: 70px 0;
-            border-top: 1px solid var(--border);
-        }
+        section { padding: 70px 0; border-top: 1px solid var(--border); }
 
-        h1 {
-            font-size: clamp(26px, 5vw, 38px);
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            line-height: 1.2;
-            margin-bottom: 12px;
-        }
-
-        h2 {
-            font-size: clamp(20px, 4vw, 26px);
-            font-weight: 650;
-            margin-bottom: 20px;
-        }
-
-        h3 {
-            font-size: 17px;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-
+        h1 { font-size: clamp(26px, 5vw, 38px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 12px; }
+        h2 { font-size: clamp(20px, 4vw, 26px); font-weight: 650; margin-bottom: 20px; }
+        h3 { font-size: 17px; font-weight: 600; margin-bottom: 4px; }
         p { color: var(--text-secondary); }
         a { color: var(--accent); text-decoration: none; }
         a:hover { color: var(--accent-hover); }
 
+        /* Анимация пульса */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.4); }
+        }
+        .online-dot {
+            display: inline-block; width: 10px; height: 10px;
+            background: var(--green); border-radius: 50%;
+            margin-right: 8px; animation: pulse 1.5s infinite;
+        }
+
         /* Кнопка */
         .btn {
-            display: inline-block;
-            background: var(--accent);
-            color: #fff;
-            padding: 14px 32px;
-            border-radius: 8px;
-            font-weight: 600;
-            text-decoration: none;
+            display: inline-flex; align-items: center; gap: 8px;
+            background: var(--accent); color: #fff;
+            padding: 14px 32px; border-radius: 8px;
+            font-weight: 600; text-decoration: none;
             transition: background 0.2s, transform 0.1s;
         }
         .btn:hover { background: var(--accent-hover); color: #fff; text-decoration: none; }
         .btn:active { transform: scale(0.97); }
 
         /* Hero */
-        .hero {
-            text-align: center;
-            padding: 100px 0 90px;
-            border-top: none;
+        .hero { text-align: center; padding: 100px 0 90px; border-top: none; }
+        .hero p { font-size: 18px; margin: 0 auto 20px; }
+
+        /* Счётчик */
+        .counter-badge {
+            display: inline-block; background: var(--surface);
+            border: 1px solid var(--border); border-radius: 20px;
+            padding: 6px 16px; font-size: 14px; font-weight: 600;
+            color: var(--accent); margin-bottom: 24px;
         }
-        .hero p { font-size: 18px; margin: 0 auto 28px; }
+
+        /* Таймлайн */
+        .timeline { display: flex; gap: 12px; margin-bottom: 32px; flex-wrap: wrap; justify-content: center; }
+        .timeline-step {
+            background: var(--surface); border-radius: var(--radius);
+            padding: 12px 16px; font-size: 13px; text-align: center;
+            flex: 1; min-width: 130px; max-width: 180px;
+        }
+        .timeline-step .emoji { font-size: 20px; display: block; margin-bottom: 4px; }
+        .timeline-step .time-label { color: var(--accent); font-weight: 600; font-size: 12px; }
 
         /* Шаги */
-        .steps {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-            gap: 16px;
-            margin-top: 16px;
-        }
+        .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 16px; margin-top: 16px; }
         .step {
-            background: var(--surface);
-            border-radius: var(--radius);
-            padding: 24px 16px;
-            text-align: center;
+            background: var(--surface); border-radius: var(--radius);
+            padding: 24px 16px; text-align: center;
             transition: transform 0.2s, box-shadow 0.2s;
         }
-        .step:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.05);
-        }
+        .step:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.05); }
         .step-number {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 36px;
-            height: 36px;
-            background: var(--accent);
-            color: #fff;
-            border-radius: 50%;
-            font-weight: 700;
-            font-size: 16px;
-            margin-bottom: 12px;
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 36px; height: 36px; background: var(--accent); color: #fff;
+            border-radius: 50%; font-weight: 700; font-size: 16px; margin-bottom: 12px;
         }
         .step p { font-size: 14px; }
 
         /* FAQ */
-        .faq-item {
-            padding: 18px 0;
-            border-bottom: 1px solid var(--border);
-        }
+        .faq-item { padding: 18px 0; border-bottom: 1px solid var(--border); }
         .faq-item:first-of-type { border-top: 1px solid var(--border); }
         .faq-item p { font-size: 15px; margin-top: 4px; }
 
         /* Галерея */
         .gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 14px;
-            margin-top: 16px;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 14px; margin-top: 16px;
         }
-        .trophy-card-old {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 18px 10px;
-            text-align: center;
-            font-size: 13px;
-            transition: border-color 0.2s, transform 0.2s;
+        .plat-card {
+            background: var(--surface); border-radius: 12px; overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s; border: 1px solid var(--border);
         }
-        .trophy-card-old:hover {
-            border-color: var(--accent);
-            transform: translateY(-2px);
-        }
-        .trophy-icon {
-            font-size: 32px;
-            margin-bottom: 6px;
-            display: block;
-        }
-        .trophy-card strong { display: block; font-size: 14px; }
-        .trophy-card span { color: var(--text-secondary); font-size: 12px; }
+        .plat-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.08); }
 
         /* Цены */
-        .price-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 16px;
-        }
-        .price-table th,
-        .price-table td {
-            text-align: left;
-            padding: 12px 8px;
-            border-bottom: 1px solid var(--border);
-            font-size: 15px;
-        }
-        .price-table th {
-            font-weight: 600;
-            color: var(--text-secondary);
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-        }
+        .price-table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+        .price-table th, .price-table td { text-align: left; padding: 12px 8px; border-bottom: 1px solid var(--border); font-size: 15px; }
+        .price-table th { font-weight: 600; color: var(--text-secondary); font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em; }
         .price-table tr:hover td { background: var(--surface); }
-        .price-note {
-            font-size: 13px;
-            color: #999;
-            margin-top: 16px;
-        }
+        .price-note { font-size: 13px; color: #999; margin-top: 16px; }
 
         /* Отзывы */
-        .review {
-            background: var(--surface);
-            border-radius: var(--radius);
-            padding: 20px 18px;
-            margin-bottom: 14px;
-        }
-        .review-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 6px;
-        }
+        .review { background: var(--surface); border-radius: var(--radius); padding: 20px 18px; margin-bottom: 14px; }
+        .review-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
         .review-name { font-weight: 600; font-size: 15px; }
         .review-stars { color: #f59e0b; letter-spacing: 2px; }
         .review-game { font-size: 13px; color: var(--accent); }
         .review-text { font-size: 14px; color: var(--text-secondary); margin-top: 6px; }
 
         /* Контакты */
-        .contact-card {
-            background: var(--surface);
-            border-radius: 14px;
-            padding: 32px 24px;
-            text-align: center;
-        }
-        .contact-links {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            justify-content: center;
-            margin-top: 18px;
-        }
+        .contact-card { background: var(--surface); border-radius: 14px; padding: 32px 24px; text-align: center; }
+        .contact-links { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 18px; }
         .contact-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: #fff;
-            padding: 10px 18px;
-            border-radius: 8px;
-            font-weight: 500;
-            font-size: 15px;
-            border: 1px solid var(--border);
+            display: inline-flex; align-items: center; gap: 6px;
+            background: #fff; padding: 10px 18px; border-radius: 8px;
+            font-weight: 500; font-size: 15px; border: 1px solid var(--border);
             transition: border-color 0.2s;
         }
         .contact-link:hover { border-color: var(--accent); text-decoration: none; }
 
-        /* Footer */
-        footer {
-            text-align: center;
-            font-size: 13px;
-            color: #999;
-            padding: 20px 0;
-            border-top: 1px solid var(--border);
+        /* Калькулятор */
+        .calc-box {
+            background: var(--surface); border-radius: var(--radius);
+            padding: 20px; margin-top: 20px; text-align: center;
         }
+        .calc-box input {
+            padding: 10px 16px; border: 1px solid var(--border);
+            border-radius: 8px; font-size: 15px; width: 100%; max-width: 300px;
+            margin-bottom: 12px;
+        }
+        .calc-box button {
+            background: var(--accent); color: #fff; border: none;
+            padding: 10px 24px; border-radius: 8px; font-size: 15px;
+            font-weight: 600; cursor: pointer;
+        }
+        .calc-box button:hover { background: var(--accent-hover); }
+
+        /* Footer */
+        footer { text-align: center; font-size: 13px; color: #999; padding: 20px 0; border-top: 1px solid var(--border); }
+
+        /* Последняя платина */
+        .last-plat {
+            text-align: center; margin-top: 8px; font-size: 13px; color: var(--text-secondary);
+        }
+        .last-plat strong { color: var(--accent); }
 
         @media print {
-            .btn, .contact-links, nav { display: none; }
+            .btn, .contact-links, nav, .calc-box { display: none; }
         }
     </style>
 </head>
@@ -285,9 +203,33 @@
             <div class="container">
                 <h1>Помощь с платинами на PS4 и PS5</h1>
                 <p>Выбиваю трофеи и помогаю пройти сложные моменты. Без взломов и читов — своими руками.</p>
+
+                <!-- Счётчик -->
+                <div class="counter-badge">🏆 Уже 40 платин выбито</div>
+
+                <!-- Таймлайн -->
+                <div class="timeline">
+                    <div class="timeline-step">
+                        <span class="emoji">💬</span>
+                        Обсуждаем игру
+                        <span class="time-label">~10 мин</span>
+                    </div>
+                    <div class="timeline-step">
+                        <span class="emoji">🎮</span>
+                        Я прохожу
+                        <span class="time-label">2–7 дней</span>
+                    </div>
+                    <div class="timeline-step">
+                        <span class="emoji">🏆</span>
+                        Платина ваша
+                        <span class="time-label">Моментально</span>
+                    </div>
+                </div>
+
                 <a class="btn" href="https://t.me/platinum_boost" target="_blank">
-                    Написать в Telegram
+                    <span class="online-dot"></span> Написать в Telegram
                 </a>
+                <p style="margin-top:8px;font-size:13px;color:var(--green);">● Обычно отвечаю в течение часа</p>
             </div>
         </section>
 
@@ -315,100 +257,75 @@
             </div>
         </section>
 
-                                                                            <!-- Мои платины -->
-    <section>
-        <div class="container">
-            <h2>Мои платины</h2>
-            <p style="margin-bottom:16px;">Обновлено автоматически</p>
-            <style>
-                .plat-card {
-                    background: #f8f9fa;
-                    border-radius: 12px;
-                    overflow: hidden;
-                    transition: transform 0.2s, box-shadow 0.2s;
-                    border: 1px solid #e5e7eb;
-                }
-                .plat-card:hover {
-                    transform: translateY(-4px);
-                    box-shadow: 0 12px 32px rgba(0,0,0,0.08);
-                }
-            </style>
-            <div class="gallery">
-            <div class="plat-card">
-                <img src="covers/batman__return_to_arkham__cover.png" style="width:100%;height:140px;object-fit:contain;background:#1a1a2e;border-radius:10px 10px 0 0;padding:10px;" alt="Batman: Return to Arkham - Arkham Asylum">
-                <div style="padding:12px 10px;text-align:center;">
-                    <div style="font-size:13px;font-weight:600;margin:4px 0;">Batman: Return to Arkham - Arkham Asylum</div>
-                    <div style="font-size:12px;color:#888;">PS4 · 48 трофеев</div>
-                    <span>1 535 дней</span>
+        <!-- Мои платины -->
+        <section>
+            <div class="container">
+                <h2>Мои платины</h2>
+                <p style="margin-bottom:8px;">Несколько примеров из того, что уже сделано</p>
+                <div class="gallery">
+                    <div class="plat-card">
+                        <div style="width:100%;height:140px;background:linear-gradient(135deg,#2c5282,#1a365d);border-radius:10px 10px 0 0;display:flex;align-items:center;justify-content:center;font-size:48px;font-weight:700;color:rgba(255,255,255,0.4);">B</div>
+                        <div style="padding:12px 10px;text-align:center;">
+                            <div style="font-size:13px;font-weight:600;margin:4px 0;">Batman: Arkham Asylum</div>
+                            <div style="font-size:12px;color:#888;">PS4 · 48 трофеев</div>
+                            <span style="font-size:12px;color:#888;">1 535 дней</span>
+                        </div>
+                    </div>
+                    <div class="plat-card">
+                        <div style="width:100%;height:140px;background:linear-gradient(135deg,#276749,#1a4732);border-radius:10px 10px 0 0;display:flex;align-items:center;justify-content:center;font-size:48px;font-weight:700;color:rgba(255,255,255,0.4);">C</div>
+                        <div style="padding:12px 10px;text-align:center;">
+                            <div style="font-size:13px;font-weight:600;margin:4px 0;">Cairn</div>
+                            <div style="font-size:12px;color:#888;">PS5 · 53 трофея</div>
+                            <span style="font-size:12px;color:#888;">5 дней</span>
+                        </div>
+                    </div>
+                    <div class="plat-card">
+                        <div style="width:100%;height:140px;background:linear-gradient(135deg,#9b2c2c,#631717);border-radius:10px 10px 0 0;display:flex;align-items:center;justify-content:center;font-size:48px;font-weight:700;color:rgba(255,255,255,0.4);">C</div>
+                        <div style="padding:12px 10px;text-align:center;">
+                            <div style="font-size:13px;font-weight:600;margin:4px 0;">Crysis Remastered</div>
+                            <div style="font-size:12px;color:#888;">PS4 · 41 трофей</div>
+                            <span style="font-size:12px;color:#888;">7 дней</span>
+                        </div>
+                    </div>
+                    <div class="plat-card">
+                        <div style="width:100%;height:140px;background:linear-gradient(135deg,#6b46c1,#3d2466);border-radius:10px 10px 0 0;display:flex;align-items:center;justify-content:center;font-size:48px;font-weight:700;color:rgba(255,255,255,0.4);">P</div>
+                        <div style="padding:12px 10px;text-align:center;">
+                            <div style="font-size:13px;font-weight:600;margin:4px 0;">Pinball Heroes</div>
+                            <div style="font-size:12px;color:#888;">PS5 · 21 трофей</div>
+                            <span style="font-size:12px;color:#888;">22 часа</span>
+                        </div>
+                    </div>
+                    <div class="plat-card">
+                        <div style="width:100%;height:140px;background:linear-gradient(135deg,#c05621,#7a3513);border-radius:10px 10px 0 0;display:flex;align-items:center;justify-content:center;font-size:48px;font-weight:700;color:rgba(255,255,255,0.4);">T</div>
+                        <div style="padding:12px 10px;text-align:center;">
+                            <div style="font-size:13px;font-weight:600;margin:4px 0;">Twisted Metal 4</div>
+                            <div style="font-size:12px;color:#888;">PS5 · 21 трофей</div>
+                            <span style="font-size:12px;color:#888;">2 часа</span>
+                        </div>
+                    </div>
+                    <div class="plat-card">
+                        <div style="width:100%;height:140px;background:linear-gradient(135deg,#2d3748,#1a202c);border-radius:10px 10px 0 0;display:flex;align-items:center;justify-content:center;font-size:48px;font-weight:700;color:rgba(255,255,255,0.4);">T</div>
+                        <div style="padding:12px 10px;text-align:center;">
+                            <div style="font-size:13px;font-weight:600;margin:4px 0;">Twisted Metal III</div>
+                            <div style="font-size:12px;color:#888;">PS5 · 21 трофей</div>
+                            <span style="font-size:12px;color:#888;">3 дня</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Последняя платина -->
+                <div class="last-plat">
+                    Последняя платина: <strong>Cairn</strong> — 5 дней назад
+                </div>
+
+                <!-- Калькулятор -->
+                <div class="calc-box" style="margin-top:24px;">
+                    <h3 style="margin-bottom:8px;">Узнать стоимость</h3>
+                    <input type="text" id="gameName" placeholder="Название игры">
+                    <button onclick="calcPrice()">Узнать цену</button>
                 </div>
             </div>
-            <div class="plat-card">
-                <img src="covers/cairn_plat.png" style="width:100%;height:140px;object-fit:contain;background:#1a1a2e;border-radius:10px 10px 0 0;padding:10px;" alt="Cairn">
-                <div style="padding:12px 10px;text-align:center;">
-                    <div style="font-size:13px;font-weight:600;margin:4px 0;">Cairn</div>
-                    <div style="font-size:12px;color:#888;">PS5 · 53 трофеев</div>
-                    <span>5 дней</span>
-                </div>
-            </div>
-            <div class="plat-card">
-                <img src="covers/crysis_remastered_plat.png" style="width:100%;height:140px;object-fit:contain;background:#1a1a2e;border-radius:10px 10px 0 0;padding:10px;" alt="Crysis Remastered">
-                <div style="padding:12px 10px;text-align:center;">
-                    <div style="font-size:13px;font-weight:600;margin:4px 0;">Crysis Remastered</div>
-                    <div style="font-size:12px;color:#888;">PS4 · 41 трофеев</div>
-                    <span>7 дней</span>
-                </div>
-            </div>
-            <div class="plat-card">
-                <img src="covers/pinball_heroes_cover.png" style="width:100%;height:140px;object-fit:contain;background:#1a1a2e;border-radius:10px 10px 0 0;padding:10px;" alt="Pinball Heroes">
-                <div style="padding:12px 10px;text-align:center;">
-                    <div style="font-size:13px;font-weight:600;margin:4px 0;">Pinball Heroes</div>
-                    <div style="font-size:12px;color:#888;">PS5 · 21 трофеев</div>
-                    <span>22 часа</span>
-                </div>
-            </div>
-            <div class="plat-card">
-                <img src="covers/twisted_metal_4_plat.png" style="width:100%;height:140px;object-fit:contain;background:#1a1a2e;border-radius:10px 10px 0 0;padding:10px;" alt="Twisted Metal 4">
-                <div style="padding:12px 10px;text-align:center;">
-                    <div style="font-size:13px;font-weight:600;margin:4px 0;">Twisted Metal 4</div>
-                    <div style="font-size:12px;color:#888;">PS5 · 21 трофеев</div>
-                    <span>2 часа</span>
-                </div>
-            </div>
-            <div class="plat-card">
-                <img src="covers/twisted_metal_iii_plat.png" style="width:100%;height:140px;object-fit:contain;background:#1a1a2e;border-radius:10px 10px 0 0;padding:10px;" alt="Twisted Metal III">
-                <div style="padding:12px 10px;text-align:center;">
-                    <div style="font-size:13px;font-weight:600;margin:4px 0;">Twisted Metal III</div>
-                    <div style="font-size:12px;color:#888;">PS5 · 21 трофеев</div>
-                    <span>3 дня</span>
-                </div>
-            </div>
-            <div class="plat-card">
-                <img src="covers/one_piece__pirate_warrior_cover.png" style="width:100%;height:140px;object-fit:contain;background:#1a1a2e;border-radius:10px 10px 0 0;padding:10px;" alt="One Piece: Pirate Warriors 4">
-                <div style="padding:12px 10px;text-align:center;">
-                    <div style="font-size:13px;font-weight:600;margin:4px 0;">One Piece: Pirate Warriors 4</div>
-                    <div style="font-size:12px;color:#888;">PS4 · 40 трофеев</div>
-                    <span>127 дней</span>
-                </div>
-            </div>
-            <div class="plat-card">
-                <img src="covers/stick_fight__the_game_plat.png" style="width:100%;height:140px;object-fit:contain;background:#1a1a2e;border-radius:10px 10px 0 0;padding:10px;" alt="Stick Fight: The Game">
-                <div style="padding:12px 10px;text-align:center;">
-                    <div style="font-size:13px;font-weight:600;margin:4px 0;">Stick Fight: The Game</div>
-                    <div style="font-size:12px;color:#888;">PS4 · 28 трофеев</div>
-                    <span>3 дня</span>
-                </div>
-            </div>
-            <div class="plat-card">
-                <img src="covers/call_of_duty__modern_warf_cover.png" style="width:100%;height:140px;object-fit:contain;background:#1a1a2e;border-radius:10px 10px 0 0;padding:10px;" alt="Call of Duty: Modern Warfare 2 Campaign...">
-                <div style="padding:12px 10px;text-align:center;">
-                    <div style="font-size:13px;font-weight:600;margin:4px 0;">Call of Duty: Modern Warfare 2 Campaign...</div>
-                    <div style="font-size:12px;color:#888;">PS4 · 51 трофеев</div>
-                    <span>9 дней</span>
-                </div>
-            </div>
-            </div>
-        </div>
-    </section>
+        </section>
 
         <!-- FAQ -->
         <section>
@@ -421,6 +338,14 @@
                 <div class="faq-item">
                     <h3>Не украдёте аккаунт?</h3>
                     <p>Нет. Работаю по предоплате 50% или поэтапно. После окончания вы просто меняете пароль.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Что будет, если не успеете в срок?</h3>
+                    <p>Предупрежу заранее. Если задержка по моей вине — сделаю скидку или верну предоплату.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Как происходит оплата?</h3>
+                    <p>50% перед началом, 50% после получения платины. Можно поэтапно для долгих игр.</p>
                 </div>
                 <div class="faq-item">
                     <h3>Сколько стоит и как быстро?</h3>
@@ -455,89 +380,53 @@
 
     <!-- ==================== ЦЕНЫ ==================== -->
     <div class="page" id="page-prices">
-
         <section class="hero">
             <div class="container">
                 <h1>Цены</h1>
                 <p>Простые и понятные. Без скрытых платежей и наценок «от сложности».</p>
                 <a class="btn" href="https://t.me/platinum_boost" target="_blank">
-                    Уточнить цену для вашей игры
+                    <span class="online-dot"></span> Уточнить цену для вашей игры
                 </a>
             </div>
         </section>
-
         <section>
             <div class="container">
                 <h2>Стоимость платин</h2>
                 <table class="price-table">
                     <thead>
-                        <tr>
-                            <th>Тип игры</th>
-                            <th>Примеры</th>
-                            <th>Цена</th>
-                        </tr>
+                        <tr><th>Тип игры</th><th>Примеры</th><th>Цена</th></tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Сюжетные (лёгкие)</td>
-                            <td>Spider-Man, Ratchet, Astro Bot</td>
-                            <td>от 1500₽</td>
-                        </tr>
-                        <tr>
-                            <td>Средняя сложность</td>
-                            <td>Ghost of Tsushima, Horizon</td>
-                            <td>от 3000₽</td>
-                        </tr>
-                        <tr>
-                            <td>Сложные / гриндовые</td>
-                            <td>Elden Ring, Hollow Knight, файтинг-трофеи</td>
-                            <td>от 5000₽</td>
-                        </tr>
-                        <tr>
-                            <td>Отдельные трофеи</td>
-                            <td>Добить 1–2 сложных трофея</td>
-                            <td>от 500₽</td>
-                        </tr>
+                        <tr><td>Сюжетные (лёгкие)</td><td>Spider-Man, Ratchet, Astro Bot</td><td>от 1500₽</td></tr>
+                        <tr><td>Средняя сложность</td><td>Ghost of Tsushima, Horizon</td><td>от 3000₽</td></tr>
+                        <tr><td>Сложные / гриндовые</td><td>Elden Ring, Hollow Knight</td><td>от 5000₽</td></tr>
+                        <tr><td>Отдельные трофеи</td><td>Добить 1–2 сложных трофея</td><td>от 500₽</td></tr>
                     </tbody>
                 </table>
                 <p class="price-note">Точная цена зависит от того, сколько трофеев уже собрано. Напишите — посчитаю за минуту.</p>
-            </div>
-        </section>
-
-        <!-- Контакты -->
-        <section>
-            <div class="container">
-                <div class="contact-card">
-                    <h2>Остались вопросы?</h2>
-                    <p>Напишите в Telegram — обсудим вашу игру и назову точную цену.</p>
-                    <div class="contact-links">
-                        <a class="contact-link" href="https://t.me/platinum_boost" target="_blank">
-                            Telegram: @platinum_boost
-                        </a>
-                    </div>
+                <div class="calc-box" style="margin-top:24px;">
+                    <h3 style="margin-bottom:8px;">Узнать стоимость</h3>
+                    <input type="text" id="gameName2" placeholder="Название игры">
+                    <button onclick="calcPrice2()">Узнать цену</button>
                 </div>
             </div>
         </section>
-
     </div>
 
     <!-- ==================== ОТЗЫВЫ ==================== -->
     <div class="page" id="page-reviews">
-
         <section class="hero">
             <div class="container">
                 <h1>Отзывы</h1>
                 <p>Что говорят клиенты после получения платин.</p>
                 <a class="btn" href="https://t.me/platinum_boost" target="_blank">
-                    Хочу так же
+                    <span class="online-dot"></span> Хочу так же
                 </a>
             </div>
         </section>
-
         <section>
             <div class="container">
                 <h2>Последние отзывы</h2>
-
                 <div class="review">
                     <div class="review-header">
                         <span class="review-name">Дмитрий К.</span>
@@ -546,7 +435,6 @@
                     <div class="review-game">Spider-Man 2 — платина за 3 дня</div>
                     <div class="review-text">Быстро, чётко. Пароль после работы сменил, всё чисто. Рекомендую.</div>
                 </div>
-
                 <div class="review">
                     <div class="review-header">
                         <span class="review-name">Артём К.</span>
@@ -555,7 +443,6 @@
                     <div class="review-game">Elden Ring — все трофеи боссов</div>
                     <div class="review-text">Добил то, что я полгода не мог. Работает по предоплате, но риски объяснил заранее, всё прозрачно.</div>
                 </div>
-
                 <div class="review">
                     <div class="review-header">
                         <span class="review-name">Иван П.</span>
@@ -566,22 +453,6 @@
                 </div>
             </div>
         </section>
-
-        <!-- Контакты -->
-        <section>
-            <div class="container">
-                <div class="contact-card">
-                    <h2>Присоединяйтесь к довольным</h2>
-                    <p>Напишите в Telegram — обсудим вашу игру.</p>
-                    <div class="contact-links">
-                        <a class="contact-link" href="https://t.me/platinum_boost" target="_blank">
-                            Telegram: @platinum_boost
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
     </div>
 
     <!-- Footer -->
@@ -595,21 +466,30 @@
     <script>
         const links = document.querySelectorAll('.nav-link');
         const pages = document.querySelectorAll('.page');
-
         links.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const target = link.dataset.page;
-
                 links.forEach(l => l.classList.remove('active'));
                 link.classList.add('active');
-
                 pages.forEach(p => p.classList.remove('active'));
                 document.getElementById('page-' + target).classList.add('active');
-
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
         });
+
+        function calcPrice() {
+            const game = document.getElementById('gameName').value.trim();
+            if (game) {
+                window.open('https://t.me/platinum_boost?text=' + encodeURIComponent('Здравствуйте! Хочу узнать цену за платину в игре: ' + game), '_blank');
+            }
+        }
+        function calcPrice2() {
+            const game = document.getElementById('gameName2').value.trim();
+            if (game) {
+                window.open('https://t.me/platinum_boost?text=' + encodeURIComponent('Здравствуйте! Хочу узнать цену за платину в игре: ' + game), '_blank');
+            }
+        }
     </script>
 
 </body>
