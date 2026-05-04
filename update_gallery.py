@@ -32,11 +32,26 @@ def fetch_platinums():
     log(f"Запрашиваю {PSN_URL}...")
 
     headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.9,ru;q=0.8",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+        "Upgrade-Insecure-Requests": "1",
+        "Sec-Fetch-Dest": "document",
+        "Sec-Fetch-Mode": "navigate",
+        "Sec-Fetch-Site": "none",
+        "Sec-Fetch-User": "?1",
+        "Cache-Control": "max-age=0"
     }
 
     try:
-        response = requests.get(PSN_URL, headers=headers, timeout=30)
+        # Сначала заходим на главную, чтобы получить cookies
+        session = requests.Session()
+        session.get("https://psnprofiles.com", headers=headers, timeout=20)
+
+        # Теперь открываем профиль
+        response = session.get(PSN_URL, headers=headers, timeout=30)
         response.raise_for_status()
     except Exception as e:
         log(f"Ошибка запроса: {e}")
@@ -48,6 +63,10 @@ def fetch_platinums():
     # Ищем строки таблицы с играми
     rows = soup.select("table.zebra tr")
 
+    # Если таблица не найдена — пробуем другие селекторы
+    if not rows:
+        rows = soup.select("table tr")
+
     for row in rows:
         try:
             # Пропускаем заголовок таблицы
@@ -55,44 +74,49 @@ def fetch_platinums():
                 continue
 
             cells = row.select("td")
-            if not cells or len(cells) < 4:
+            if not cells or len(cells) < 2:
                 continue
 
             # Название игры
-            name_elem = cells[0].select_one("a.title")
+            name_elem = cells[0].select_one("a.title, a")
             if not name_elem:
                 continue
             name = name_elem.text.strip()
 
-            # Прогресс трофеев
-            trophy_cell = cells[1]
-            trophy_text = trophy_cell.text.strip() if trophy_cell else ""
+            # Пропускаем пустые названия
+            if not name:
+                continue
 
-            # Определяем, платина ли
-            is_platinum = "100%" in trophy_text or "🏅" in str(cells)
+            # Ищем платиновый трофей (изображение или иконка)
+            plat_elem = row.select_one("img[src*='platinum'], img[alt*='Platinum'], img[title*='Platinum']")
+            trophy_icon = row.select_one("span.trophy-platinum, .icon-platinum")
 
-            # Проверяем наличие трофея платины в ячейке
-            plat_img = cells[2].select_one("img[title*='Platinum']") if len(cells) > 2 else None
-            is_plat = plat_img is not None
+            # Проверяем текст на 100%
+            row_text = row.text if row else ""
+
+            is_platinum = plat_elem is not None or trophy_icon is not None or "100%" in row_text
+
+            if not is_platinum:
+                continue
+
+            # Парсим трофеи (например, "48/48")
+            trophy_match = re.search(r'(\d+)\s*/\s*(\d+)', row_text)
+            trophies_total = trophy_match.group(2) if trophy_match else "?"
 
             # Парсим время
-            time_text = cells[3].text.strip() if len(cells) > 3 else ""
+            time_match = re.search(r'(?:за|in)\s+([^·\n]+)', row_text, re.IGNORECASE)
+            time_str = time_match.group(1).strip() if time_match else ""
 
-            if is_platinum or is_plat:
-                # Вытаскиваем количество трофеев (например "48/48")
-                trophy_match = re.search(r'(\d+)/(\d+)', trophy_text)
-                trophies_total = trophy_match.group(2) if trophy_match else "?"
+            # Платформа
+            platform_span = cells[0].select_one("span.platform, .platform")
+            platform = platform_span.text.strip() if platform_span else ""
 
-                # Платформа
-                platform_elem = cells[0].select_one("span.platform")
-                platform = platform_elem.text.strip() if platform_elem else ""
-
-                platinums.append({
-                    "name": name,
-                    "trophies": trophies_total,
-                    "time": time_text if time_text else "",
-                    "platform": platform
-                })
+            platinums.append({
+                "name": name,
+                "trophies": trophies_total,
+                "time": time_str,
+                "platform": platform
+            })
 
         except Exception as e:
             log(f"Ошибка при парсинге строки: {e}")
@@ -103,11 +127,24 @@ def fetch_platinums():
     # Берём последние 5 платин
     platinums = platinums[:5]
 
+    # Если платин больше 5 — берём 5 самых свежих (они в начале списка)
     return platinums
 
 
 def generate_gallery_html(platinums):
     """Генерирует HTML-код галереи из списка платин."""
+
+    if not platinums:
+        # Если платин нет — возвращаем заглушку
+        return """    <!-- Мои платины -->
+    <section>
+        <div class="container">
+            <h2>Мои платины</h2>
+            <p style="margin-bottom:8px;">Платины скоро появятся. Идёт сбор данных с PSNProfiles.</p>
+            <div class="gallery">
+            </div>
+        </div>
+    </section>"""
 
     cards = []
     for p in platinums:
@@ -141,7 +178,7 @@ def update_html(new_gallery):
     with open(HTML_FILE, "r", encoding="utf-8") as f:
         html = f.read()
 
-    # Ищем блок <!-- Мои платины --> и заменяем всё до </section>
+    # Ищем блок <!-- Мои платины --> и заменяем всё до закрывающего </section>
     pattern = r'<!-- Мои платины -->.*?</section>'
     replacement = new_gallery
 
