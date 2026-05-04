@@ -34,7 +34,6 @@
 
         .container { max-width: 720px; margin: 0 auto; padding: 0 20px; }
 
-        /* Навигация */
         nav {
             text-align: center; padding: 18px 0;
             border-bottom: 1px solid var(--border);
@@ -136,15 +135,14 @@
             to { opacity: 1; transform: translateX(0); }
         }
         .carousel-game-icon {
-            font-size: 64px; margin-bottom: 12px;
             width: 100px; height: 100px; line-height: 100px;
-            background: linear-gradient(135deg, var(--accent), #8b5cf6);
             border-radius: 20px; margin: 0 auto 16px;
             color: #fff; font-weight: 700; font-size: 48px;
         }
         .carousel-info { margin-top: 12px; }
-        .carousel-info div { margin: 4px 0; font-size: 14px; color: var(--text-secondary); }
-        .carousel-info strong { color: var(--text); font-size: 16px; }
+        .carousel-info .game-name { font-size: 18px; font-weight: 700; color: #f1f5f9; margin-bottom: 8px; }
+        .carousel-info .game-meta { font-size: 13px; color: var(--text-secondary); margin: 3px 0; }
+        .carousel-info .game-meta span { color: var(--accent); font-weight: 600; }
 
         .carousel-btn {
             position: absolute; top: 50%; transform: translateY(-50%);
@@ -164,8 +162,6 @@
             margin: 0 4px; cursor: pointer; transition: background 0.2s;
         }
         .carousel-dots span.active { background: var(--accent); }
-
-        .gallery { display: none; }
 
         .last-plat {
             text-align: center; margin-top: 16px; font-size: 13px; color: var(--text-secondary);
@@ -222,6 +218,9 @@
 
         footer { text-align: center; font-size: 13px; color: #64748b; padding: 20px 0; border-top: 1px solid var(--border); }
 
+        .all-plat-link { text-align: center; margin-top: 12px; }
+        .all-plat-link a { font-size: 14px; font-weight: 600; }
+
         @media print {
             .btn, .contact-links, nav, .calc-box { display: none; }
         }
@@ -242,7 +241,7 @@
             <div class="container">
                 <h1>Помощь с платинами на PS4 и PS5</h1>
                 <p>Выбиваю трофеи и помогаю пройти сложные моменты. Без взломов и читов — своими руками.</p>
-                <div class="counter-badge">🏆 Уже 9 платин выбито</div>
+                <div class="counter-badge">🏆 Уже 40 платин выбито</div>
                 <div class="timeline">
                     <div class="timeline-step"><span class="emoji">💬</span>Обсуждаем игру<span class="time-label">~10 мин</span></div>
                     <div class="timeline-step"><span class="emoji">🎮</span>Я прохожу<span class="time-label">2–7 дней</span></div>
@@ -255,7 +254,6 @@
             </div>
         </section>
 
-        <!-- Как это работает -->
         <section>
             <div class="container">
                 <h2>Как это работает</h2>
@@ -267,82 +265,24 @@
             </div>
         </section>
 
-        <!-- Карусель платин -->
+        <!-- Карусель -->
         <section>
             <div class="container">
                 <h2>Мои платины</h2>
-                <p style="margin-bottom:8px;">Листайте вправо-влево</p>
+                <p style="margin-bottom:8px;">Листайте вправо-влево ◀ ▶</p>
                 <div class="carousel-container" id="carousel">
                     <button class="carousel-btn prev" onclick="moveSlide(-1)">◀</button>
                     <button class="carousel-btn next" onclick="moveSlide(1)">▶</button>
-                    <div class="carousel-slide active" data-game="Batman: Return to Arkham - Arkham Asylum" data-platform="PS4" data-trophies="48/48" data-time="1 535 дней" data-color="#2c5282"></div>
-                    
-        <div class="carousel-slide" 
-             data-game="Batman: Return to Arkham - Arkham Asylum" 
-             data-platform="PS4" 
-             data-trophies="48" 
-             data-time="1 535 дней"
-             data-difficulty="5.67"
-             data-color="#6af511"></div>
-        <div class="carousel-slide" 
-             data-game="Cairn" 
-             data-platform="PS5" 
-             data-trophies="53" 
-             data-time="5 дней"
-             data-difficulty="—"
-             data-color="#408973"></div>
-        <div class="carousel-slide" 
-             data-game="Crysis Remastered" 
-             data-platform="PS4" 
-             data-trophies="41" 
-             data-time="7 дней"
-             data-difficulty="3.78"
-             data-color="#11366d"></div>
-        <div class="carousel-slide" 
-             data-game="Pinball Heroes" 
-             data-platform="PS5" 
-             data-trophies="21" 
-             data-time="22 часа"
-             data-difficulty="1.44"
-             data-color="#b71c0f"></div>
-        <div class="carousel-slide" 
-             data-game="Twisted Metal 4" 
-             data-platform="PS5" 
-             data-trophies="21" 
-             data-time="2 часа"
-             data-difficulty="3.38"
-             data-color="#51b92d"></div>
-        <div class="carousel-slide" 
-             data-game="Twisted Metal III" 
-             data-platform="PS5" 
-             data-trophies="21" 
-             data-time="3 дня"
-             data-difficulty="3.00"
-             data-color="#a5a9b7"></div>
-        <div class="carousel-slide" 
-             data-game="One Piece: Pirate Warriors 4" 
-             data-platform="PS4" 
-             data-trophies="40" 
-             data-time="127 дней"
-             data-difficulty="3.33"
-             data-color="#78890f"></div>
-        <div class="carousel-slide" 
-             data-game="Stick Fight: The Game" 
-             data-platform="PS4" 
-             data-trophies="28" 
-             data-time="3 дня"
-             data-difficulty="2.45"
-             data-color="#2f7667"></div>
-        <div class="carousel-slide" 
-             data-game="Call of Duty: Modern Warfare 2 Campaign..." 
-             data-platform="PS4" 
-             data-trophies="51" 
-             data-time="9 дней"
-             data-difficulty="4.60"
-             data-color="#f202e5"></div>
-        <div class="carousel-dots" id="carouselDots"></div>
+                    <div class="carousel-slide active" data-game="Batman: Return to Arkham - Arkham Asylum" data-platform="PS4" data-trophies="48" data-time="15–20 часов" data-difficulty="6/10" data-color="#2c5282"></div>
+                    <div class="carousel-slide" data-game="Cairn" data-platform="PS5" data-trophies="53" data-time="10–12 часов" data-difficulty="4/10" data-color="#276749"></div>
+                    <div class="carousel-slide" data-game="Crysis Remastered" data-platform="PS4" data-trophies="41" data-time="10–12 часов" data-difficulty="5/10" data-color="#9b2c2c"></div>
+                    <div class="carousel-slide" data-game="Pinball Heroes" data-platform="PS5" data-trophies="21" data-time="2–3 часа" data-difficulty="2/10" data-color="#6b46c1"></div>
+                    <div class="carousel-slide" data-game="Twisted Metal 4" data-platform="PS5" data-trophies="21" data-time="1–2 часа" data-difficulty="1/10" data-color="#c05621"></div>
+                    <div class="carousel-slide" data-game="Twisted Metal III" data-platform="PS5" data-trophies="21" data-time="1–2 часа" data-difficulty="1/10" data-color="#2d3748"></div>
+                    <div class="carousel-dots" id="carouselDots"></div>
                 </div>
                 <div class="last-plat">Последняя платина: <strong>Cairn</strong> — 5 дней назад</div>
+                <div class="all-plat-link"><a href="#" onclick="alert('Скоро здесь будет таблица со всеми 40 платинами!')">📋 Смотреть все платины →</a></div>
                 <div class="calc-box">
                     <h3 style="margin-bottom:8px;">Узнать стоимость</h3>
                     <input type="text" id="gameName" placeholder="Название игры">
@@ -351,7 +291,6 @@
             </div>
         </section>
 
-        <!-- FAQ -->
         <section>
             <div class="container">
                 <h2>Часто спрашивают</h2>
@@ -364,7 +303,6 @@
             </div>
         </section>
 
-        <!-- Контакты -->
         <section>
             <div class="container">
                 <div class="contact-card">
@@ -425,12 +363,12 @@
                 <div class="review">
                     <div class="review-header"><span class="review-name">Артём К.</span><span class="review-stars">★★★★★</span></div>
                     <div class="review-game">Elden Ring — все трофеи боссов</div>
-                    <div class="review-text">Добил то, что я полгода не мог. Прозрачно, без обмана.</div>
+                    <div class="review-text">Добил то, что я полгода не мог. Прозрачно.</div>
                 </div>
                 <div class="review">
                     <div class="review-header"><span class="review-name">Иван П.</span><span class="review-stars">★★★★★</span></div>
                     <div class="review-game">Ghost of Tsushima — 100%</div>
-                    <div class="review-text">За неделю сделал то, на что у меня ушли бы месяцы.</div>
+                    <div class="review-text">За неделю сделал то, на что ушли бы месяцы.</div>
                 </div>
             </div>
         </section>
@@ -441,7 +379,7 @@
     </footer>
 
     <script>
-        // Переключение страниц
+        // Навигация
         document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -453,7 +391,6 @@
             });
         });
 
-        // Калькулятор
         function calcPrice() {
             const game = document.getElementById('gameName').value.trim();
             if (game) window.open('https://t.me/platinum_boost?text=' + encodeURIComponent('Здравствуйте! Хочу узнать цену за платину в игре: ' + game), '_blank');
@@ -464,18 +401,20 @@
         const slides = document.querySelectorAll('.carousel-slide');
         const dotsContainer = document.getElementById('carouselDots');
 
+        dotsContainer.innerHTML = '';
         slides.forEach((slide, i) => {
             const dot = document.createElement('span');
             if (i === 0) dot.classList.add('active');
             dot.onclick = () => goToSlide(i);
             dotsContainer.appendChild(dot);
-            // Заполняем содержимое
+
             slide.innerHTML = `
-                <div class="carousel-game-icon" style="background:linear-gradient(135deg, ${slide.dataset.color || '#3b82f6'}, ${slide.dataset.color || '#8b5cf6'});">${slide.dataset.game[0]}</div>
+                <div class="carousel-game-icon" style="background:linear-gradient(135deg, ${slide.dataset.color}, ${slide.dataset.color}dd);">${slide.dataset.game[0]}</div>
                 <div class="carousel-info">
-                    <strong>${slide.dataset.game}</strong>
-                    <div>${slide.dataset.platform} · ${slide.dataset.trophies} трофеев</div>
-                    <div>⏱ ${slide.dataset.time}</div>
+                    <div class="game-name">${slide.dataset.game}</div>
+                    <div class="game-meta">${slide.dataset.platform} · <span>${slide.dataset.trophies}</span> трофеев</div>
+                    <div class="game-meta">⏱ Время: <span>${slide.dataset.time}</span></div>
+                    <div class="game-meta">📊 Сложность: <span>${slide.dataset.difficulty}</span></div>
                 </div>
             `;
         });
