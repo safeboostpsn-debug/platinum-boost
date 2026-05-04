@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Помощь с платинами PS4 и PS5</title>
+    <title>Platinum Boost — платины PS4 и PS5</title>
     <style>
         :root {
             --bg: #fff;
@@ -32,6 +32,36 @@
             padding: 0 20px;
         }
 
+        /* Навигация */
+        nav {
+            text-align: center;
+            padding: 18px 0;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            background: var(--bg);
+            z-index: 10;
+        }
+        nav a {
+            margin: 0 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 15px;
+            padding-bottom: 4px;
+            transition: color 0.15s, border-color 0.15s;
+            border-bottom: 2px solid transparent;
+        }
+        nav a:hover,
+        nav a.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        /* Страницы */
+        .page { display: none; }
+        .page.active { display: block; }
+
         section {
             padding: 70px 0;
             border-top: 1px solid var(--border);
@@ -58,7 +88,6 @@
         }
 
         p { color: var(--text-secondary); }
-
         a { color: var(--accent); text-decoration: none; }
         a:hover { color: var(--accent-hover); }
 
@@ -73,7 +102,7 @@
             text-decoration: none;
             transition: background 0.2s, transform 0.1s;
         }
-        .btn:hover { background: var(--accent-hover); color: #fff; }
+        .btn:hover { background: var(--accent-hover); color: #fff; text-decoration: none; }
         .btn:active { transform: scale(0.97); }
 
         /* Hero */
@@ -125,6 +154,79 @@
         .faq-item:first-of-type { border-top: 1px solid var(--border); }
         .faq-item p { font-size: 15px; margin-top: 4px; }
 
+        /* Галерея */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 14px;
+            margin-top: 16px;
+        }
+        .trophy-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 18px 10px;
+            text-align: center;
+            font-size: 13px;
+            transition: border-color 0.2s, transform 0.2s;
+        }
+        .trophy-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+        .trophy-icon {
+            font-size: 32px;
+            margin-bottom: 6px;
+            display: block;
+        }
+        .trophy-card strong { display: block; font-size: 14px; }
+        .trophy-card span { color: var(--text-secondary); font-size: 12px; }
+
+        /* Цены */
+        .price-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+        }
+        .price-table th,
+        .price-table td {
+            text-align: left;
+            padding: 12px 8px;
+            border-bottom: 1px solid var(--border);
+            font-size: 15px;
+        }
+        .price-table th {
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        .price-table tr:hover td { background: var(--surface); }
+        .price-note {
+            font-size: 13px;
+            color: #999;
+            margin-top: 16px;
+        }
+
+        /* Отзывы */
+        .review {
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 20px 18px;
+            margin-bottom: 14px;
+        }
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+        .review-name { font-weight: 600; font-size: 15px; }
+        .review-stars { color: #f59e0b; letter-spacing: 2px; }
+        .review-game { font-size: 13px; color: var(--accent); }
+        .review-text { font-size: 14px; color: var(--text-secondary); margin-top: 6px; }
+
         /* Контакты */
         .contact-card {
             background: var(--surface);
@@ -162,152 +264,260 @@
             border-top: 1px solid var(--border);
         }
 
-        /* Галерея */
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 14px;
-            margin-top: 16px;
-        }
-        .trophy-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 18px 10px;
-            text-align: center;
-            font-size: 13px;
-            transition: border-color 0.2s, transform 0.2s;
-        }
-        .trophy-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-2px);
-        }
-        .trophy-icon {
-            font-size: 32px;
-            margin-bottom: 6px;
-            display: block;
-        }
-        .trophy-card strong {
-            display: block;
-            font-size: 14px;
-        }
-        .trophy-card span {
-            color: var(--text-secondary);
-            font-size: 12px;
-        }
-
         @media print {
-            .btn, .contact-links { display: none; }
+            .btn, .contact-links, nav { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Hero -->
-    <section class="hero">
-        <div class="container">
-            <h1>Помощь с платинами на PS4 и PS5</h1>
-            <p>Выбиваю трофеи и помогаю пройти сложные моменты. Без взломов и читов — своими руками.</p>
-            <a class="btn" href="https://t.me/platinum_boost" target="_blank">
-                Написать в Telegram
-            </a>
-        </div>
-    </section>
+    <!-- Навигация -->
+    <nav>
+        <a href="#" class="nav-link active" data-page="home">Главная</a>
+        <a href="#" class="nav-link" data-page="prices">Цены</a>
+        <a href="#" class="nav-link" data-page="reviews">Отзывы</a>
+    </nav>
 
-    <!-- Как это работает -->
-    <section>
-        <div class="container">
-            <h2>Как это работает</h2>
-            <div class="steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <h3>Вы мне пишете</h3>
-                    <p>Обсуждаем игру, нужные трофеи, сроки и цену. Отвечаю спокойно, без навязывания.</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <h3>Я играю</h3>
-                    <p>Прохожу игру через официальный шейринг консоли. Без читов, всё руками.</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <h3>Платина ваша</h3>
-                    <p>Трофеи зачисляются в ваш профиль. Меняете пароль — готово.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- ==================== ГЛАВНАЯ ==================== -->
+    <div class="page active" id="page-home">
 
-    <!-- Мои платины -->
-    <section>
-        <div class="container">
-            <h2>Мои платины</h2>
-            <p style="margin-bottom: 8px;">Несколько примеров из того, что уже сделано</p>
-            <div class="gallery">
-                <div class="trophy-card">
-                    <span class="trophy-icon">🏆</span>
-                    <strong>Spider-Man 2</strong>
-                    <span>Платина за 3 дня</span>
-                </div>
-                <div class="trophy-card">
-                    <span class="trophy-icon">🏆</span>
-                    <strong>Ratchet & Clank</strong>
-                    <span>Платина за 4 дня</span>
-                </div>
-                <div class="trophy-card">
-                    <span class="trophy-icon">🏆</span>
-                    <strong>Ghost of Tsushima</strong>
-                    <span>Платина за 6 дней</span>
-                </div>
-                <div class="trophy-card">
-                    <span class="trophy-icon">🏆</span>
-                    <strong>Horizon Forbidden West</strong>
-                    <span>Платина за 5 дней</span>
-                </div>
+        <section class="hero">
+            <div class="container">
+                <h1>Помощь с платинами на PS4 и PS5</h1>
+                <p>Выбиваю трофеи и помогаю пройти сложные моменты. Без взломов и читов — своими руками.</p>
+                <a class="btn" href="https://t.me/platinum_boost" target="_blank">
+                    Написать в Telegram
+                </a>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- FAQ -->
-    <section>
-        <div class="container">
-            <h2>Часто спрашивают</h2>
-            <div class="faq-item">
-                <h3>Это безопасно? Меня не забанят?</h3>
-                <p>Да. Я использую официальную функцию шейринга консоли — она разрешена Sony. Читов нет.</p>
-            </div>
-            <div class="faq-item">
-                <h3>Не украдёте аккаунт?</h3>
-                <p>Нет. Работаю по предоплате 50% или поэтапно. После окончания вы просто меняете пароль.</p>
-            </div>
-            <div class="faq-item">
-                <h3>Сколько стоит и как быстро?</h3>
-                <p>Простые платины — от 1500₽ за 2–5 дней. Сложные обсуждаем отдельно. Цену и срок называю до начала.</p>
-            </div>
-            <div class="faq-item">
-                <h3>Какие игры берёте?</h3>
-                <p>Практически любые. Напишите название — скажу, реально ли и за сколько.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Контакты -->
-    <section>
-        <div class="container">
-            <div class="contact-card">
-                <h2>Свяжитесь со мной</h2>
-                <p>Пишите в любое время, отвечаю обычно в течение часа.</p>
-                <div class="contact-links">
-                    <a class="contact-link" href="https://t.me/platinum_boost" target="_blank">
-                        Telegram: @platinum_boost
-                    </a>
-                    <a class="contact-link" href="#">
-                        Профиль на Авито
-                    </a>
+        <!-- Как это работает -->
+        <section>
+            <div class="container">
+                <h2>Как это работает</h2>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3>Вы мне пишете</h3>
+                        <p>Обсуждаем игру, нужные трофеи, сроки и цену. Отвечаю спокойно, без навязывания.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3>Я играю</h3>
+                        <p>Прохожу игру через официальный шейринг консоли. Без читов, всё руками.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3>Платина ваша</h3>
+                        <p>Трофеи зачисляются в ваш профиль. Меняете пароль — готово.</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+        <!-- Мои платины -->
+        <section>
+            <div class="container">
+                <h2>Мои платины</h2>
+                <p style="margin-bottom:8px;">Несколько примеров из того, что уже сделано</p>
+                <div class="gallery">
+                    <div class="trophy-card">
+                        <span class="trophy-icon">🏆</span>
+                        <strong>Spider-Man 2</strong>
+                        <span>Платина за 3 дня</span>
+                    </div>
+                    <div class="trophy-card">
+                        <span class="trophy-icon">🏆</span>
+                        <strong>Ratchet & Clank</strong>
+                        <span>Платина за 4 дня</span>
+                    </div>
+                    <div class="trophy-card">
+                        <span class="trophy-icon">🏆</span>
+                        <strong>Ghost of Tsushima</strong>
+                        <span>Платина за 6 дней</span>
+                    </div>
+                    <div class="trophy-card">
+                        <span class="trophy-icon">🏆</span>
+                        <strong>Horizon Forbidden West</strong>
+                        <span>Платина за 5 дней</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section>
+            <div class="container">
+                <h2>Часто спрашивают</h2>
+                <div class="faq-item">
+                    <h3>Это безопасно? Меня не забанят?</h3>
+                    <p>Да. Я использую официальную функцию шейринга консоли — она разрешена Sony. Читов нет.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Не украдёте аккаунт?</h3>
+                    <p>Нет. Работаю по предоплате 50% или поэтапно. После окончания вы просто меняете пароль.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Сколько стоит и как быстро?</h3>
+                    <p>Простые платины — от 1500₽ за 2–5 дней. Сложные обсуждаем отдельно. Цену и срок называю до начала.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Какие игры берёте?</h3>
+                    <p>Практически любые. Напишите название — скажу, реально ли и за сколько.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Контакты -->
+        <section>
+            <div class="container">
+                <div class="contact-card">
+                    <h2>Свяжитесь со мной</h2>
+                    <p>Пишите в любое время, отвечаю обычно в течение часа.</p>
+                    <div class="contact-links">
+                        <a class="contact-link" href="https://t.me/platinum_boost" target="_blank">
+                            Telegram: @platinum_boost
+                        </a>
+                        <a class="contact-link" href="#">
+                            Профиль на Авито
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- ==================== ЦЕНЫ ==================== -->
+    <div class="page" id="page-prices">
+
+        <section class="hero">
+            <div class="container">
+                <h1>Цены</h1>
+                <p>Простые и понятные. Без скрытых платежей и наценок «от сложности».</p>
+                <a class="btn" href="https://t.me/platinum_boost" target="_blank">
+                    Уточнить цену для вашей игры
+                </a>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <h2>Стоимость платин</h2>
+                <table class="price-table">
+                    <thead>
+                        <tr>
+                            <th>Тип игры</th>
+                            <th>Примеры</th>
+                            <th>Цена</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Сюжетные (лёгкие)</td>
+                            <td>Spider-Man, Ratchet, Astro Bot</td>
+                            <td>от 1500₽</td>
+                        </tr>
+                        <tr>
+                            <td>Средняя сложность</td>
+                            <td>Ghost of Tsushima, Horizon</td>
+                            <td>от 3000₽</td>
+                        </tr>
+                        <tr>
+                            <td>Сложные / гриндовые</td>
+                            <td>Elden Ring, Hollow Knight, файтинг-трофеи</td>
+                            <td>от 5000₽</td>
+                        </tr>
+                        <tr>
+                            <td>Отдельные трофеи</td>
+                            <td>Добить 1–2 сложных трофея</td>
+                            <td>от 500₽</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="price-note">Точная цена зависит от того, сколько трофеев уже собрано. Напишите — посчитаю за минуту.</p>
+            </div>
+        </section>
+
+        <!-- Контакты -->
+        <section>
+            <div class="container">
+                <div class="contact-card">
+                    <h2>Остались вопросы?</h2>
+                    <p>Напишите в Telegram — обсудим вашу игру и назову точную цену.</p>
+                    <div class="contact-links">
+                        <a class="contact-link" href="https://t.me/platinum_boost" target="_blank">
+                            Telegram: @platinum_boost
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- ==================== ОТЗЫВЫ ==================== -->
+    <div class="page" id="page-reviews">
+
+        <section class="hero">
+            <div class="container">
+                <h1>Отзывы</h1>
+                <p>Что говорят клиенты после получения платин.</p>
+                <a class="btn" href="https://t.me/platinum_boost" target="_blank">
+                    Хочу так же
+                </a>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <h2>Последние отзывы</h2>
+
+                <div class="review">
+                    <div class="review-header">
+                        <span class="review-name">Дмитрий К.</span>
+                        <span class="review-stars">★★★★★</span>
+                    </div>
+                    <div class="review-game">Spider-Man 2 — платина за 3 дня</div>
+                    <div class="review-text">Быстро, чётко. Пароль после работы сменил, всё чисто. Рекомендую.</div>
+                </div>
+
+                <div class="review">
+                    <div class="review-header">
+                        <span class="review-name">Артём К.</span>
+                        <span class="review-stars">★★★★★</span>
+                    </div>
+                    <div class="review-game">Elden Ring — все трофеи боссов</div>
+                    <div class="review-text">Добил то, что я полгода не мог. Работает по предоплате, но риски объяснил заранее, всё прозрачно.</div>
+                </div>
+
+                <div class="review">
+                    <div class="review-header">
+                        <span class="review-name">Иван П.</span>
+                        <span class="review-stars">★★★★★</span>
+                    </div>
+                    <div class="review-game">Ghost of Tsushima — 100%</div>
+                    <div class="review-text">Сделал за неделю то, на что у меня ушли бы месяцы. Скриншоты платин скинул сразу.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Контакты -->
+        <section>
+            <div class="container">
+                <div class="contact-card">
+                    <h2>Присоединяйтесь к довольным</h2>
+                    <p>Напишите в Telegram — обсудим вашу игру.</p>
+                    <div class="contact-links">
+                        <a class="contact-link" href="https://t.me/platinum_boost" target="_blank">
+                            Telegram: @platinum_boost
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
 
     <!-- Footer -->
     <footer>
@@ -316,7 +526,26 @@
         </div>
     </footer>
 
-</body>
-</html>
+    <!-- Переключение страниц -->
+    <script>
+        const links = document.querySelectorAll('.nav-link');
+        const pages = document.querySelectorAll('.page');
+
+        links.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = link.dataset.page;
+
+                links.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+
+                pages.forEach(p => p.classList.remove('active'));
+                document.getElementById('page-' + target).classList.add('active');
+
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+    </script>
+
 </body>
 </html>
