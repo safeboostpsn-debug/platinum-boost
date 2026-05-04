@@ -7,9 +7,8 @@ from bs4 import BeautifulSoup
 import re
 from datetime import datetime
 
-# Твой ID на stratege.ru
-STRATEGE_ID = "SASHOK911"
-STRATEGE_URL = f"https://stratege.ru/playstation/users/{STRATEGE_ID}/"
+# Правильный URL профиля на stratege.ru
+STRATEGE_URL = "https://stratege.ru/playstation/users/sana17/"
 
 HTML_FILE = "index.html"
 LOG_FILE = "update_log.txt"
@@ -42,6 +41,8 @@ def fetch_platinums():
     table = soup.select_one("table.games, table")
     if not table:
         log("Таблица с играми не найдена")
+        # Выведем часть HTML для отладки
+        log(f"Заголовок страницы: {soup.title.text if soup.title else 'нет'}")
         return []
 
     rows = table.select("tr")
@@ -149,7 +150,7 @@ def main():
     platinums = fetch_platinums()
 
     if not platinums:
-        log("Платины не найдены")
+        log("Платины не найдены. Проверь, открыт ли профиль на stratege.ru")
         return
 
     gallery = generate_gallery_html(platinums)
