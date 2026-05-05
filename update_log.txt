@@ -18,3 +18,7 @@
 [2026-05-04 18:45:29] Запрашиваю https://stratege.ru/playstation/users/sana17/...
 [2026-05-04 18:45:29] Ошибка запроса: 403 Client Error: Forbidden for url: https://stratege.ru/playstation/users/sana17/
 [2026-05-04 18:45:29] Платины не найдены. Проверь, открыт ли профиль на stratege.ru
+[2026-05-05 11:06:24] ========== ЗАПУСК ==========
+[2026-05-05 11:06:24] Запрашиваю https://stratege.ru/playstation/users/sana17/...
+[2026-05-05 11:06:25] Ошибка запроса: 403 Client Error: Forbidden for url: https://stratege.ru/playstation/users/sana17/
+[2026-05-05 11:06:25] Платины не найдены. Проверь, открыт ли профиль на stratege.ru
