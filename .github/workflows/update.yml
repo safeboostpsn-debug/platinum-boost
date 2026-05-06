@@ -2,8 +2,8 @@ name: Обновление платин
 
 on:
   schedule:
-    - cron: '0 6 * * *'  # каждый день в 6 утра UTC
-  workflow_dispatch:      # ручной запуск
+    - cron: '0 6 * * *'
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -19,15 +19,15 @@ jobs:
           python-version: '3.12'
 
       - name: Установить зависимости
-        run: pip install selenium beautifulsoup4
+        run: pip install selenium
 
-      - name: Собрать платины
+      - name: Собрать платины (Selenium)
         run: python scraper.py
 
-      - name: Обновить сайт
+      - name: Обновить index.html
         run: python generator.py
 
-      - name: Запушить изменения
+      - name: Запушить
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
