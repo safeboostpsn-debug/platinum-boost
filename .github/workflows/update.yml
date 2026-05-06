@@ -1,23 +1,35 @@
-name: Update Gallery
+name: Обновление платин
 
 on:
   schedule:
-    - cron: '0 6 * * *'
-  workflow_dispatch:
+    - cron: '0 6 * * *'  # каждый день в 6 утра UTC
+  workflow_dispatch:      # ручной запуск
+
+permissions:
+  contents: write
 
 jobs:
   update:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: pip install requests beautifulsoup4
-      - run: python update_gallery.py
-      - run: |
+
+      - name: Установить зависимости
+        run: pip install selenium beautifulsoup4
+
+      - name: Собрать платины
+        run: python scraper.py
+
+      - name: Обновить сайт
+        run: python generator.py
+
+      - name: Запушить изменения
+        run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add index.html update_log.txt
-          git diff --staged --quiet || git commit -m "Auto update gallery"
-          git push
+          git add index.html data.json
+          git diff --staged --quiet || (git commit -m "Автообновление платин" && git push)
