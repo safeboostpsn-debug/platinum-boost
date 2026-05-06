@@ -1,6 +1,5 @@
 """
-Сбор платин со Stratege через Selenium + Chrome.
-Запускается в GitHub Actions (7 ГБ RAM, предустановленный Chrome).
+Сбор платин с PSNProfiles через Selenium + Chrome.
 """
 import re
 import hashlib
@@ -12,7 +11,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 
-STRATEGE_URL = "https://stratege.ru/playstation/users/sana17/"
+PSN_URL = "https://psnprofiles.com/SASHOK911"
 DATA_FILE = "data.json"
 MAX_PLATINUMS = 40
 
@@ -30,7 +29,7 @@ class Platinum:
             self.color = "#" + hashlib.md5(self.name.encode()).hexdigest()[:6]
 
 def fetch_platinums() -> List[Platinum]:
-    print(f"Запрашиваю {STRATEGE_URL}...")
+    print(f"Запрашиваю {PSN_URL}...")
     options = Options()
     options.add_argument("--headless")
     options.add_argument("--no-sandbox")
@@ -40,37 +39,42 @@ def fetch_platinums() -> List[Platinum]:
 
     driver = webdriver.Chrome(options=options)
     try:
-        driver.get(STRATEGE_URL)
+        driver.get(PSN_URL)
         time.sleep(10)
-        rows = driver.find_elements(By.CSS_SELECTOR, "table tr")
-        print(f"Строк в таблице: {len(rows)}")
+        # PSNProfiles использует другую структуру — ищем все игры с платиной
+        rows = driver.find_elements(By.CSS_SELECTOR, "table tr, .game-list-item, .game")
+        print(f"Найдено элементов: {len(rows)}")
+
         platinums = []
         for row in rows:
             try:
-                html = row.get_attribute("innerHTML") or ""
-                if "platinum.png" not in html.lower():
+                text = row.text
+                if "100%" not in text:
                     continue
-                cells = row.find_elements(By.TAG_NAME, "td")
-                if len(cells) < 8:
-                    continue
-                name = cells[0].text.strip()
+                # Парсим имя игры (первая строка до разрыва)
+                lines = text.split('\n')
+                name = lines[0].strip() if lines else ""
                 name = re.sub(r'\s*\(.*?\)\s*', '', name)
-                if not name or name in ("SASHOK911", "Доска платин", "Название", ""):
+                if not name:
                     continue
-                trophies_text = cells[3].text.strip() if len(cells) > 3 else "?"
-                m = re.search(r'(\d+)/(\d+)', trophies_text)
-                if not m or m.group(1) != m.group(2):
+                # Ищем платформу
+                platform = "PS5" if "PS5" in text else "PS4"
+                # Ищем трофеи (например "48 of 48")
+                m = re.search(r'(\d+)\s*of\s*(\d+)', text) or re.search(r'(\d+)/(\d+)', text)
+                if m and m.group(1) == m.group(2):
+                    trophies = m.group(2)
+                else:
                     continue
                 platinums.append(Platinum(
                     name=name,
-                    platform=cells[2].text.strip() if len(cells) > 2 else "?",
-                    trophies=m.group(2),
-                    difficulty=cells[4].text.strip() if len(cells) > 4 else "?",
-                    time=cells[10].text.strip() if len(cells) > 10 else "?"
+                    platform=platform,
+                    trophies=trophies,
+                    difficulty="?",
+                    time="?"
                 ))
-            except Exception as e:
-                print(f"Ошибка парсинга строки: {e}")
+            except:
                 continue
+
         print(f"Собрано платин: {len(platinums)}")
         return platinums[:MAX_PLATINUMS]
     finally:
@@ -80,7 +84,7 @@ def main():
     platinums = fetch_platinums()
     with open(DATA_FILE, "w", encoding="utf-8") as f:
         json.dump([asdict(p) for p in platinums], f, ensure_ascii=False, indent=2)
-    print(f"Данные сохранены в {DATA_FILE}")
+    print(f"Сохранено в {DATA_FILE}")
 
 if __name__ == "__main__":
     main()
