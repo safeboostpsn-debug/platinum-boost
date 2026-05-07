@@ -1,6 +1,5 @@
 """
-Генератор слайдов карусели. Использует mapping.json для привязки изображений.
-Пути к картинкам должны быть указаны относительно корня репозитория.
+Генератор слайдов карусели. Использует data.json и mapping.json.
 """
 import json
 import re
@@ -26,7 +25,7 @@ def load_platinums() -> list[dict]:
 
 def load_mapping() -> Dict[str, GameImages]:
     if not os.path.exists(MAPPING_FILE):
-        print(f"{MAPPING_FILE} не найден. Использую заглушки.")
+        print(f"{MAPPING_FILE} не найден.")
         return {}
     with open(MAPPING_FILE, "r", encoding="utf-8") as f:
         data = json.load(f)
@@ -35,12 +34,9 @@ def load_mapping() -> Dict[str, GameImages]:
         game = item["game"].strip().lower()
         cover = item.get("cover", "")
         icon = item.get("icon", "")
-        # Проверяем, что файл существует
         if cover and not os.path.exists(cover):
-            print(f"  ⚠ Файл не найден: {cover}")
             cover = ""
         if icon and not os.path.exists(icon):
-            print(f"  ⚠ Файл не найден: {icon}")
             icon = ""
         mapping[game] = GameImages(cover=cover or None, icon=icon or None)
     print(f"Загружено маппингов: {len(mapping)}")
@@ -51,48 +47,43 @@ def generate_slides(platinums: list[dict], mapping: Dict[str, GameImages]) -> st
     for p in platinums:
         game_key = p["name"].strip().lower()
         imgs = mapping.get(game_key, GameImages())
-        cover = imgs.cover
-        icon = imgs.icon
+        
+        # Приоритет: обложка из data.json > обложка из mapping > заглушка
+        cover = p.get("cover", "") or imgs.cover or ""
+        icon = imgs.icon or ""
 
-        if cover:
-            cover_html = f'<img src="{cover}" style="width:100%;height:140px;object-fit:cover;border-radius:10px 10px 0 0;" alt="{p["name"]}">'
+        if cover and os.path.exists(cover):
+            cover_html = f'<img src="{cover}" class="cover-img" alt="{p["name"]}">'
         else:
-            letter = p["name"][0].upper() if p["name"] else "?"
-            color = p.get("color", "#3b82f6")
-            cover_html = f'<div style="width:100%;height:140px;background:linear-gradient(135deg,{color}, {color}dd);border-radius:10px 10px 0 0;display:flex;align-items:center;justify-content:center;font-size:48px;font-weight:700;color:rgba(255,255,255,0.4);">{letter}</div>'
+            cover_html = f'<div class="cover-img" style="background:linear-gradient(135deg,{p.get("color","#3b82f6")}, {p.get("color","#3b82f6")}dd);display:flex;align-items:center;justify-content:center;font-size:64px;font-weight:700;color:rgba(255,255,255,0.3);">{p["name"][0].upper()}</div>'
 
-        icon_html = ""
-        if icon:
-            icon_html = f'<img src="{icon}" style="width:24px;height:24px;vertical-align:middle;margin-right:4px;" alt="🏆">'
+        icon_html = f'<img src="{icon}" style="width:32px;height:32px;" alt="🏆">' if icon else ''
+        plat_badge = f'<div class="plat-badge">{icon_html}<span>Платина</span></div>' if icon else '<div class="plat-badge"><span>🏆 Платина</span></div>'
 
-        lines.append(
-            f'        <div class="carousel-slide" '
-            f'data-game="{p["name"]}" data-platform="{p["platform"]}" '
-            f'data-trophies="{p["trophies"]}" data-time="{p["time"]}" '
-            f'data-difficulty="{p["difficulty"]}" data-color="{p["color"]}">'
-            f'{cover_html}'
-            f'<div style="padding:12px 10px;text-align:center;">'
-            f'{icon_html}'
-            f'<div style="font-size:13px;font-weight:600;margin:4px 0;">{p["name"]} <span style="color:#888;font-weight:400;">({p["platform"]})</span></div>'
-            f'<div style="font-size:12px;color:#888;">{p["trophies"]} трофеев</div>'
-            f'<div style="font-size:12px;color:#888;">⏱ {p["time"]} · 📊 {p["difficulty"]}</div>'
-            f'</div></div>'
-        )
+        lines.append(f'''        <div class="carousel-slide" data-game="{p["name"]}" data-platform="{p["platform"]}" data-trophies="{p["trophies"]}" data-time="{p["time"]}" data-difficulty="{p["difficulty"]}" data-color="{p.get("color","#3b82f6")}">
+            {cover_html}
+            <div class="info-overlay">
+                {plat_badge}
+                <div class="game-name">{p["name"]} ({p["platform"]})</div>
+                <div class="game-stats">
+                    <div class="stat-item"><div class="stat-value">{p["trophies"]}</div><div class="stat-label">трофеев</div></div>
+                    <div class="stat-item"><div class="stat-value">{p["time"]}</div><div class="stat-label">время</div></div>
+                    <div class="stat-item"><div class="stat-value">{p["difficulty"]}</div><div class="stat-label">сложность</div></div>
+                </div>
+            </div>
+        </div>''')
     return "\n".join(lines)
 
 def update_html(slides_html: str, total: int, last_name: str, last_time: str) -> None:
     with open(HTML_FILE, "r", encoding="utf-8") as f:
         html = f.read()
 
-    pattern = r'(<button class="carousel-btn next".*?</button>\s*)(.*?)(\s*<div class="carousel-dots")'
+    pattern = r'(<div class="carousel-slides"[^>]*>)(.*?)(</div>\s*<button class="carousel-btn prev")'
     html = re.sub(pattern, f'\\1\n{slides_html}\n        \\3', html, flags=re.DOTALL)
 
     html = re.sub(r'Уже \d+ платин', f'Уже {total} платин', html)
-    html = re.sub(
-        r'Последняя платина: <strong>.*?</strong>.*',
-        f'Последняя платина: <strong>{last_name}</strong> — {last_time}',
-        html
-    )
+    html = re.sub(r'<strong id="lastPlatName">.*?</strong>', f'<strong id="lastPlatName">{last_name}</strong>', html)
+    html = re.sub(r'<span id="lastPlatTime">.*?</span>', f'<span id="lastPlatTime">{last_time}</span>', html)
 
     with open(HTML_FILE, "w", encoding="utf-8") as f:
         f.write(html)
