@@ -124,25 +124,58 @@
             position: relative; margin-top: 16px;
             background: var(--surface); border-radius: 14px;
             border: 1px solid var(--border); overflow: hidden;
+            min-height: 120px;
         }
         .carousel-slide {
-            display: none; text-align: center;
+            display: none !important;
             animation: fadeIn 0.3s ease;
+            padding: 24px 48px 24px 24px;
         }
-        .carousel-slide.active { display: block; }
+        .carousel-slide.active {
+            display: flex !important;
+            align-items: center;
+            gap: 16px;
+        }
+        .carousel-slide .cover-img {
+            width: 84px;
+            height: 84px;
+            object-fit: cover;
+            border-radius: 12px;
+            flex-shrink: 0;
+            background: #1a1a2e;
+        }
+        .carousel-slide .info-block {
+            flex: 1;
+            min-width: 0;
+        }
+        .carousel-slide .game-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: #f1f5f9;
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+        .carousel-slide .game-meta {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin: 2px 0;
+        }
+        .carousel-slide .game-meta span {
+            color: var(--accent);
+            font-weight: 600;
+        }
+        .carousel-slide .plat-icon-small {
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+            margin-right: 4px;
+            flex-shrink: 0;
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateX(20px); }
             to { opacity: 1; transform: translateX(0); }
         }
-        .carousel-game-icon {
-            width: 100px; height: 100px; line-height: 100px;
-            border-radius: 20px; margin: 0 auto 16px;
-            color: #fff; font-weight: 700; font-size: 48px;
-        }
-        .carousel-info { margin-top: 12px; }
-        .carousel-info .game-name { font-size: 18px; font-weight: 700; color: #f1f5f9; margin-bottom: 8px; }
-        .carousel-info .game-meta { font-size: 13px; color: var(--text-secondary); margin: 3px 0; }
-        .carousel-info .game-meta span { color: var(--accent); font-weight: 600; }
 
         .carousel-btn {
             position: absolute; top: 50%; transform: translateY(-50%);
@@ -221,6 +254,19 @@
         .all-plat-link { text-align: center; margin-top: 12px; }
         .all-plat-link a { font-size: 14px; font-weight: 600; }
 
+        @media (max-width: 480px) {
+            .carousel-slide.active {
+                flex-direction: column;
+                text-align: center;
+                padding: 20px 48px;
+            }
+            .carousel-slide .cover-img {
+                width: 100px;
+                height: 100px;
+                margin-bottom: 12px;
+            }
+        }
+
         @media print {
             .btn, .contact-links, nav, .calc-box { display: none; }
         }
@@ -234,7 +280,6 @@
         <a href="#" class="nav-link" data-page="reviews">Отзывы</a>
     </nav>
 
-    <!-- ГЛАВНАЯ -->
     <div class="page active" id="page-home">
 
         <section class="hero">
@@ -265,7 +310,6 @@
             </div>
         </section>
 
-        <!-- Карусель -->
         <section>
             <div class="container">
                 <h2>Мои платины</h2>
@@ -273,17 +317,17 @@
                 <div class="carousel-container" id="carousel">
                     <button class="carousel-btn prev" onclick="moveSlide(-1)">◀</button>
                     <button class="carousel-btn next" onclick="moveSlide(1)">▶</button>
-                    
-        <div class="carousel-slide" data-game="Batman: Return to Arkham - Arkham Asylum" data-platform="PS4" data-trophies="48" data-time="1 535 дней" data-difficulty="5.67" data-color="#2c5282"><img src="covers/ICON0.png" style="width:100%;height:140px;object-fit:cover;border-radius:10px 10px 0 0;" alt="Batman: Return to Arkham - Arkham Asylum"><div style="padding:12px 10px;text-align:center;"><img src="covers2/TROP000.png" style="width:24px;height:24px;vertical-align:middle;margin-right:4px;" alt="🏆"><div style="font-size:13px;font-weight:600;margin:4px 0;">Batman: Return to Arkham - Arkham Asylum <span style="color:#888;font-weight:400;">(PS4)</span></div><div style="font-size:12px;color:#888;">48 трофеев</div><div style="font-size:12px;color:#888;">⏱ 1 535 дней · 📊 5.67</div></div></div>
-        <div class="carousel-slide" data-game="Cairn" data-platform="PS5" data-trophies="53" data-time="5 дней" data-difficulty="—" data-color="#276749"><img src="covers/ICON0 (1).png" style="width:100%;height:140px;object-fit:cover;border-radius:10px 10px 0 0;" alt="Cairn"><div style="padding:12px 10px;text-align:center;"><img src="covers2/TROP000_w100h100.png" style="width:24px;height:24px;vertical-align:middle;margin-right:4px;" alt="🏆"><div style="font-size:13px;font-weight:600;margin:4px 0;">Cairn <span style="color:#888;font-weight:400;">(PS5)</span></div><div style="font-size:12px;color:#888;">53 трофеев</div><div style="font-size:12px;color:#888;">⏱ 5 дней · 📊 —</div></div></div>
-        <div class="carousel-slide" data-game="Crysis Remastered" data-platform="PS4" data-trophies="41" data-time="7 дней" data-difficulty="3.78" data-color="#9b2c2c"><img src="covers/ICON0 (2).png" style="width:100%;height:140px;object-fit:cover;border-radius:10px 10px 0 0;" alt="Crysis Remastered"><div style="padding:12px 10px;text-align:center;"><img src="covers2/TROP000 (1).png" style="width:24px;height:24px;vertical-align:middle;margin-right:4px;" alt="🏆"><div style="font-size:13px;font-weight:600;margin:4px 0;">Crysis Remastered <span style="color:#888;font-weight:400;">(PS4)</span></div><div style="font-size:12px;color:#888;">41 трофеев</div><div style="font-size:12px;color:#888;">⏱ 7 дней · 📊 3.78</div></div></div>
-        <div class="carousel-slide" data-game="Pinball Heroes" data-platform="PS5" data-trophies="21" data-time="22 часа" data-difficulty="1.44" data-color="#6b46c1"><img src="covers/ICON0 (3).png" style="width:100%;height:140px;object-fit:cover;border-radius:10px 10px 0 0;" alt="Pinball Heroes"><div style="padding:12px 10px;text-align:center;"><img src="covers2/TROP000 (2).png" style="width:24px;height:24px;vertical-align:middle;margin-right:4px;" alt="🏆"><div style="font-size:13px;font-weight:600;margin:4px 0;">Pinball Heroes <span style="color:#888;font-weight:400;">(PS5)</span></div><div style="font-size:12px;color:#888;">21 трофеев</div><div style="font-size:12px;color:#888;">⏱ 22 часа · 📊 1.44</div></div></div>
-        <div class="carousel-slide" data-game="Twisted Metal 4" data-platform="PS5" data-trophies="21" data-time="2 часа" data-difficulty="3.38" data-color="#c05621"><img src="covers/ICON0 (4).png" style="width:100%;height:140px;object-fit:cover;border-radius:10px 10px 0 0;" alt="Twisted Metal 4"><div style="padding:12px 10px;text-align:center;"><img src="covers2/TROP000 (3).png" style="width:24px;height:24px;vertical-align:middle;margin-right:4px;" alt="🏆"><div style="font-size:13px;font-weight:600;margin:4px 0;">Twisted Metal 4 <span style="color:#888;font-weight:400;">(PS5)</span></div><div style="font-size:12px;color:#888;">21 трофеев</div><div style="font-size:12px;color:#888;">⏱ 2 часа · 📊 3.38</div></div></div>
-        <div class="carousel-slide" data-game="Twisted Metal III" data-platform="PS5" data-trophies="21" data-time="3 дня" data-difficulty="3.00" data-color="#2d3748"><img src="covers/ICON0 (5).png" style="width:100%;height:140px;object-fit:cover;border-radius:10px 10px 0 0;" alt="Twisted Metal III"><div style="padding:12px 10px;text-align:center;"><img src="covers2/TROP000 (4).png" style="width:24px;height:24px;vertical-align:middle;margin-right:4px;" alt="🏆"><div style="font-size:13px;font-weight:600;margin:4px 0;">Twisted Metal III <span style="color:#888;font-weight:400;">(PS5)</span></div><div style="font-size:12px;color:#888;">21 трофеев</div><div style="font-size:12px;color:#888;">⏱ 3 дня · 📊 3.00</div></div></div>
-        
+                    <!-- Генерируется generator.py -->
+                    <div class="carousel-slide active" data-game="Загрузка..." data-platform="..." data-trophies="0" data-time="..." data-difficulty="..." data-color="#3b82f6">
+                        <div class="cover-img" style="background:linear-gradient(135deg,#3b82f6,#1d4ed8);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.5);font-size:32px;font-weight:700;">?</div>
+                        <div class="info-block">
+                            <div class="game-name">Загрузка...</div>
+                            <div class="game-meta">Загрузка платин...</div>
+                        </div>
+                    </div>
                     <div class="carousel-dots" id="carouselDots"></div>
                 </div>
-                <div class="last-plat">Последняя платина: <strong id="lastPlatName">Batman: Return to Arkham - Arkham Asylum</strong> — <span id="lastPlatTime">1 535 дней</span></div>
+                <div class="last-plat">Последняя платина: <strong id="lastPlatName">...</strong> — <span id="lastPlatTime">...</span></div>
                 <div class="all-plat-link"><a href="#" onclick="alert('Скоро здесь будет таблица со всеми 40 платинами!')">📋 Смотреть все платины →</a></div>
                 <div class="calc-box">
                     <h3 style="margin-bottom:8px;">Узнать стоимость</h3>
@@ -381,7 +425,6 @@
     </footer>
 
     <script>
-        // Навигация
         document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -398,35 +441,28 @@
             if (game) window.open('https://t.me/platinum_boost?text=' + encodeURIComponent('Здравствуйте! Хочу узнать цену за платину в игре: ' + game), '_blank');
         }
 
-        // Карусель
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.carousel-slide');
-        const dotsContainer = document.getElementById('carouselDots');
-
-        dotsContainer.innerHTML = '';
-        slides.forEach((slide, i) => {
-            const dot = document.createElement('span');
-            if (i === 0) dot.classList.add('active');
-            dot.onclick = () => goToSlide(i);
-            dotsContainer.appendChild(dot);
-        });
-
-        function updateCarousel() {
-            slides.forEach((s, i) => s.classList.toggle('active', i === currentSlide));
-            document.querySelectorAll('.carousel-dots span').forEach((d, i) => d.classList.toggle('active', i === currentSlide));
-        }
-
-        function moveSlide(dir) {
-            currentSlide = (currentSlide + dir + slides.length) % slides.length;
-            updateCarousel();
-        }
-
-        function goToSlide(n) {
-            currentSlide = n;
-            updateCarousel();
-        }
-
-        updateCarousel();
+        (function() {
+            let currentSlide = 0;
+            const slides = document.querySelectorAll('.carousel-slide');
+            if (!slides.length) return;
+            const dotsContainer = document.getElementById('carouselDots');
+            dotsContainer.innerHTML = '';
+            slides.forEach((slide, i) => {
+                const dot = document.createElement('span');
+                if (i === 0) dot.classList.add('active');
+                dot.onclick = () => {
+                    slides.forEach((s, j) => s.classList.toggle('active', j === i));
+                    document.querySelectorAll('.carousel-dots span').forEach((d, j) => d.classList.toggle('active', j === i));
+                    currentSlide = i;
+                };
+                dotsContainer.appendChild(dot);
+            });
+            window.moveSlide = (dir) => {
+                currentSlide = (currentSlide + dir + slides.length) % slides.length;
+                slides.forEach((s, i) => s.classList.toggle('active', i === currentSlide));
+                document.querySelectorAll('.carousel-dots span').forEach((d, i) => d.classList.toggle('active', i === currentSlide));
+            };
+        })();
     </script>
 
 </body>
