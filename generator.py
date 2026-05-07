@@ -1,5 +1,5 @@
 """
-Генератор слайдов карусели. Использует data.json и mapping.json.
+Генератор слайдов карусели. Читает data.json и mapping.json, вставляет в index.html.
 """
 import json
 import re
@@ -47,15 +47,14 @@ def generate_slides(platinums: list[dict], mapping: Dict[str, GameImages]) -> st
     for p in platinums:
         game_key = p["name"].strip().lower()
         imgs = mapping.get(game_key, GameImages())
-        
-        # Приоритет: обложка из data.json > обложка из mapping > заглушка
         cover = p.get("cover", "") or imgs.cover or ""
         icon = imgs.icon or ""
 
         if cover and os.path.exists(cover):
             cover_html = f'<img src="{cover}" class="cover-img" alt="{p["name"]}">'
         else:
-            cover_html = f'<div class="cover-img" style="background:linear-gradient(135deg,{p.get("color","#3b82f6")}, {p.get("color","#3b82f6")}dd);display:flex;align-items:center;justify-content:center;font-size:64px;font-weight:700;color:rgba(255,255,255,0.3);">{p["name"][0].upper()}</div>'
+            letter = p["name"][0].upper() if p["name"] else "?"
+            cover_html = f'<div class="cover-img" style="background:linear-gradient(135deg,{p.get("color","#3b82f6")}, {p.get("color","#3b82f6")}dd);display:flex;align-items:center;justify-content:center;font-size:80px;font-weight:700;color:rgba(255,255,255,0.25);">{letter}</div>'
 
         icon_html = f'<img src="{icon}" style="width:32px;height:32px;" alt="🏆">' if icon else ''
         plat_badge = f'<div class="plat-badge">{icon_html}<span>Платина</span></div>' if icon else '<div class="plat-badge"><span>🏆 Платина</span></div>'
@@ -78,8 +77,12 @@ def update_html(slides_html: str, total: int, last_name: str, last_time: str) ->
     with open(HTML_FILE, "r", encoding="utf-8") as f:
         html = f.read()
 
-    pattern = r'(<div class="carousel-slides"[^>]*>)(.*?)(</div>\s*<button class="carousel-btn prev")'
-    html = re.sub(pattern, f'\\1\n{slides_html}\n        \\3', html, flags=re.DOTALL)
+    pattern = r'(<div class="carousel-slides"[^>]*>)\s*<!-- GENERATOR\.PY ВСТАВИТ СЛАЙДЫ ЗДЕСЬ -->\s*(</div>\s*<button class="carousel-btn prev")'
+    if re.search(pattern, html):
+        html = re.sub(pattern, f'\\1\n{slides_html}\n        \\2', html, flags=re.DOTALL)
+    else:
+        pattern = r'(<div class="carousel-slides"[^>]*>)(.*?)(</div>\s*<button class="carousel-btn prev")'
+        html = re.sub(pattern, f'\\1\n{slides_html}\n        \\3', html, flags=re.DOTALL)
 
     html = re.sub(r'Уже \d+ платин', f'Уже {total} платин', html)
     html = re.sub(r'<strong id="lastPlatName">.*?</strong>', f'<strong id="lastPlatName">{last_name}</strong>', html)
@@ -94,10 +97,10 @@ def main():
     if not platinums:
         print("Нет данных")
         return
-
     mapping = load_mapping()
     slides_html = generate_slides(platinums, mapping)
-    update_html(slides_html, len(platinums), platinums[0]["name"], platinums[0]["time"])
+    last = platinums[0]
+    update_html(slides_html, len(platinums), last["name"], last["time"])
     print("Готово.")
 
 if __name__ == "__main__":
