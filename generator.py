@@ -112,6 +112,10 @@ def update_html(slides_html: str, table_html: str, total: int, last_name: str, l
     html = re.sub(r'<strong id="lastPlatName">.*?</strong>', f'<strong id="lastPlatName">{last_name}</strong>', html)
     html = re.sub(r'<span id="lastPlatTime">.*?</span>', f'<span id="lastPlatTime">{last_time}</span>', html)
 
+    from datetime import datetime
+    now_utc = datetime.utcnow().strftime('%d.%m.%Y, %H:%M UTC')
+    html = re.sub(r'<span id="lastUpdate">.*?</span>', f'<span id="lastUpdate">{now_utc}</span>', html)
+    
     with open(HTML_FILE, "w", encoding="utf-8") as f:
         f.write(html)
     print(f"index.html обновлён. Слайдов в карусели: {total}, таблица встроена.")
