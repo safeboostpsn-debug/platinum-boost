@@ -1,9 +1,11 @@
 """
 Генератор слайдов и таблицы всех платин. 8 случайных в карусель, все — в таблицу.
+Добавлена кнопка «Поделиться» в Telegram для каждой игры в карусели.
 """
 import json, re, os, random
 from dataclasses import dataclass
 from typing import Optional, Dict
+from datetime import datetime
 
 DATA_FILE = "data.json"
 HTML_FILE = "index.html"
@@ -58,6 +60,9 @@ def generate_slides(platinums: list[dict], mapping: Dict[str, GameImages]) -> st
         icon_html = f'<img src="{icon}" style="width:32px;height:32px;" alt="🏆">' if icon else ''
         plat_badge = f'<div class="plat-badge">{icon_html}<span>Платина</span></div>' if icon else '<div class="plat-badge"><span>🏆 Платина</span></div>'
 
+        # Текст для шеринга
+        share_text = f"Платина%20в%20{p['name'].replace(' ', '%20')}%20–%20{p['trophies']}%20трофеев%20за%20{p['time'].replace(' ', '%20')}"
+
         lines.append(f'''        <div class="carousel-slide" data-game="{p["name"]}" data-platform="{p["platform"]}" data-trophies="{p["trophies"]}" data-time="{p["time"]}" data-difficulty="{p["difficulty"]}" data-color="{p.get("color","#3b82f6")}">
             {cover_html}
             <div class="info-overlay">
@@ -68,6 +73,9 @@ def generate_slides(platinums: list[dict], mapping: Dict[str, GameImages]) -> st
                     <div class="stat-item"><div class="stat-value">{p["time"]}</div><div class="stat-label">время</div></div>
                     <div class="stat-item"><div class="stat-value">{p["difficulty"]}</div><div class="stat-label">сложность</div></div>
                 </div>
+                <a class="share-btn" href="https://t.me/share/url?url=https://safeboostpsn-debug.github.io/platinum-boost&text={share_text}" target="_blank" title="Поделиться в Telegram">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2394a3b8'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.05-.2-.07-.06-.17-.04-.25-.02-.11.02-1.84 1.17-5.2 3.44-.49.34-.94.5-1.34.49-.44-.01-1.28-.25-1.9-.45-.77-.25-1.38-.38-1.33-.81.03-.22.34-.45.94-.68 3.7-1.61 6.17-2.68 7.4-3.19 3.52-1.46 4.25-1.72 4.73-1.73.1 0 .33.02.48.14.12.09.16.22.18.31.02.1.04.33.02.5z'/%3E%3C/svg%3E" alt="Share"> Поделиться
+                </a>
             </div>
         </div>''')
     return "\n".join(lines)
@@ -107,15 +115,14 @@ def update_html(slides_html: str, table_html: str, total: int, last_name: str, l
     # Вставляем таблицу
     html = html.replace('<!-- GENERATOR.PY ВСТАВИТ ТАБЛИЦУ ЗДЕСЬ -->', table_html)
 
-    # Обновляем счётчик и последнюю платину
+    # Обновляем счётчик, последнюю платину и время обновления
     html = re.sub(r'Уже \d+ платин', f'Уже {total} платин', html)
     html = re.sub(r'<strong id="lastPlatName">.*?</strong>', f'<strong id="lastPlatName">{last_name}</strong>', html)
     html = re.sub(r'<span id="lastPlatTime">.*?</span>', f'<span id="lastPlatTime">{last_time}</span>', html)
 
-    from datetime import datetime
     now_utc = datetime.utcnow().strftime('%d.%m.%Y, %H:%M UTC')
     html = re.sub(r'<span id="lastUpdate">.*?</span>', f'<span id="lastUpdate">{now_utc}</span>', html)
-    
+
     with open(HTML_FILE, "w", encoding="utf-8") as f:
         f.write(html)
     print(f"index.html обновлён. Слайдов в карусели: {total}, таблица встроена.")
