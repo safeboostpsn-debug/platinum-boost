@@ -18,18 +18,12 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Установить зависимости
-        run: pip install selenium
-
-      - name: Собрать платины (Selenium)
-        run: python scraper.py
-
-      - name: Обновить index.html
+      - name: Обновить index.html из data.json
         run: python generator.py
 
       - name: Запушить
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add index.html data.json
+          git add index.html
           git diff --staged --quiet || (git commit -m "Автообновление платин" && git push)
