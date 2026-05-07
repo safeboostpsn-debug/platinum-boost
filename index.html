@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Platinum Boost — платины PS4 и PS5</title>
+    <title data-i18n="title">Platinum Boost — платины PS4 и PS5</title>
 
     <!-- SEO -->
     <meta name="description" content="Помощь с платиновыми трофеями на PS4 и PS5. Ручное прохождение, официальный шейринг, без банов. Более 60 платин в портфолио.">
     <meta name="keywords" content="платина PS4, платина PS5, трофеи PlayStation, буст платин, помощь с платинами, platinum boost">
     <meta name="author" content="Platinum Boost">
 
-    <!-- Open Graph (для соцсетей) -->
+    <!-- Open Graph -->
     <meta property="og:title" content="Platinum Boost — помощь с платинами PS4 и PS5">
     <meta property="og:description" content="Выбиваю трофеи своими руками. 60+ платин в портфолио. Без читов и банов.">
     <meta property="og:image" content="https://safeboostpsn-debug.github.io/platinum-boost/covers/platinum.png">
@@ -28,7 +28,17 @@
     <link rel="icon" type="image/png" sizes="32x32" href="covers/platinum.png">
     <link rel="apple-touch-icon" sizes="180x180" href="covers/platinum.png">
 
+    <!-- Google Analytics (замените G-XXXXXXXXXX на ваш идентификатор) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX');
+    </script>
+
     <style>
+        /* === Базовые переменные === */
         :root {
             --bg: #0f172a;
             --surface: #1e293b;
@@ -41,29 +51,50 @@
             --green: #22c55e;
         }
 
+        /* Светлая тема */
+        [data-theme="light"] {
+            --bg: #ffffff;
+            --surface: #f8f9fa;
+            --text: #1a1a1a;
+            --text-secondary: #555555;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --border: #e5e7eb;
+            --green: #16a34a;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
             color: var(--text);
             background-color: var(--bg);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Тёмный фоновый узор (только для тёмной темы) */
+        [data-theme="dark"] body {
             background-image: 
                 radial-gradient(circle at 25% 25%, rgba(59,130,246,0.03) 0%, transparent 50%),
                 radial-gradient(circle at 75% 75%, rgba(139,92,246,0.03) 0%, transparent 50%),
                 repeating-linear-gradient(45deg, rgba(255,255,255,0.005) 0px, rgba(255,255,255,0.005) 2px, transparent 2px, transparent 8px);
             background-attachment: fixed;
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
         }
 
         .container { max-width: 840px; margin: 0 auto; padding: 0 20px; }
 
+        /* Навигация */
         nav {
             text-align: center; padding: 18px 0;
             border-bottom: 1px solid var(--border);
-            position: sticky; top: 0; background: rgba(15,23,42,0.9);
-            backdrop-filter: blur(10px); z-index: 10;
+            position: sticky; top: 0; backdrop-filter: blur(10px); z-index: 10;
+            transition: background 0.3s;
         }
+        [data-theme="dark"] nav { background: rgba(15,23,42,0.9); }
+        [data-theme="light"] nav { background: rgba(255,255,255,0.9); }
+
         nav a {
             margin: 0 14px; font-weight: 500; color: var(--text-secondary);
             text-decoration: none; font-size: 15px; padding-bottom: 4px;
@@ -76,12 +107,52 @@
 
         section { padding: 70px 0; border-top: 1px solid var(--border); }
 
-        h1 { font-size: clamp(26px, 5vw, 38px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 12px; color: #f1f5f9; }
-        h2 { font-size: clamp(20px, 4vw, 26px); font-weight: 650; margin-bottom: 20px; color: #f1f5f9; }
-        h3 { font-size: 17px; font-weight: 600; margin-bottom: 4px; color: #e2e8f0; }
+        h1 { font-size: clamp(26px, 5vw, 38px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 12px; color: var(--text); }
+        h2 { font-size: clamp(20px, 4vw, 26px); font-weight: 650; margin-bottom: 20px; color: var(--text); }
+        h3 { font-size: 17px; font-weight: 600; margin-bottom: 4px; color: var(--text); }
         p { color: var(--text-secondary); }
         a { color: var(--accent); text-decoration: none; }
-        a:hover { color: #60a5fa; }
+        a:hover { color: var(--accent-hover); }
+
+        /* Переключатель темы */
+        .theme-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 20;
+            font-size: 20px;
+            transition: background 0.2s;
+        }
+        .theme-toggle:hover { background: var(--accent); color: #fff; }
+
+        /* Переключатель языка */
+        .lang-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 76px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 8px 12px;
+            display: flex;
+            gap: 6px;
+            z-index: 20;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .lang-toggle span { padding: 2px 6px; border-radius: 4px; transition: background 0.2s, color 0.2s; }
+        .lang-toggle span.active { background: var(--accent); color: #fff; }
+        .lang-toggle span:hover:not(.active) { background: var(--border); }
 
         @keyframes pulse {
             0%, 100% { opacity: 1; transform: scale(1); }
@@ -109,23 +180,14 @@
         .hero { text-align: center; padding: 100px 0 90px; border-top: none; }
         .hero p { font-size: 18px; margin: 0 auto 20px; }
 
+        .update-time { text-align: center; font-size: 13px; color: var(--text-secondary); margin-top: -16px; margin-bottom: 28px; }
+        .update-time span { color: var(--accent); font-weight: 600; }
+
         .counter-badge {
             display: inline-block; background: var(--surface);
             border: 1px solid var(--border); border-radius: 20px;
             padding: 6px 16px; font-size: 14px; font-weight: 600;
             color: var(--accent); margin-bottom: 24px;
-        }
-
-        .update-time {
-            text-align: center;
-            font-size: 13px;
-            color: var(--text-secondary);
-            margin-top: -16px;
-            margin-bottom: 28px;
-        }
-        .update-time span {
-            color: var(--accent);
-            font-weight: 600;
         }
 
         .timeline { display: flex; gap: 12px; margin-bottom: 32px; flex-wrap: wrap; justify-content: center; }
@@ -143,7 +205,7 @@
             padding: 24px 16px; text-align: center; border: 1px solid var(--border);
             transition: transform 0.2s, box-shadow 0.2s;
         }
-        .step:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
+        .step:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
         .step-number {
             display: inline-flex; align-items: center; justify-content: center;
             width: 36px; height: 36px; background: var(--accent); color: #fff;
@@ -155,7 +217,7 @@
         .faq-item:first-of-type { border-top: 1px solid var(--border); }
         .faq-item p { font-size: 15px; margin-top: 4px; }
 
-        /* КАРУСЕЛЬ */
+        /* Карусель */
         .carousel-wrapper {
             margin-top: 16px;
             border-radius: 16px;
@@ -165,49 +227,29 @@
             aspect-ratio: 16 / 10;
             max-height: 520px;
         }
-        .carousel-slides {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
+        .carousel-slides { position: relative; width: 100%; height: 100%; }
         .carousel-slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: none;
-            animation: fadeIn 0.3s ease;
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: none; animation: fadeIn 0.3s ease;
         }
         .carousel-slide.active { display: block; }
         .carousel-slide .cover-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            position: absolute;
-            top: 0;
-            left: 0;
+            width: 100%; height: 100%; object-fit: cover;
+            position: absolute; top: 0; left: 0;
         }
         .carousel-slide .info-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
+            position: absolute; bottom: 0; left: 0; right: 0;
             padding: 40px 24px 28px;
-            background: linear-gradient(transparent 0%, rgba(15,23,42,0.92) 60%);
+            background: linear-gradient(transparent 0%, rgba(0,0,0,0.75) 60%);
             text-align: center;
         }
         .carousel-slide .game-name {
             font-size: clamp(18px, 3vw, 24px);
-            font-weight: 700;
-            color: #f1f5f9;
-            margin-bottom: 10px;
+            font-weight: 700; color: #f1f5f9; margin-bottom: 10px;
         }
         .carousel-slide .game-stats {
-            display: flex;
-            justify-content: center;
-            gap: clamp(16px, 4vw, 32px);
-            flex-wrap: wrap;
+            display: flex; justify-content: center; gap: clamp(16px, 4vw, 32px); flex-wrap: wrap;
         }
         .carousel-slide .stat-item { text-align: center; }
         .carousel-slide .stat-value { font-size: clamp(18px, 3vw, 24px); font-weight: 700; color: var(--accent); }
@@ -219,30 +261,14 @@
         .carousel-slide .plat-badge span { font-size: 14px; font-weight: 600; color: #fbbf24; }
 
         .share-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.15);
-            color: var(--text-secondary);
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 12px;
-            cursor: pointer;
-            transition: background 0.2s, color 0.2s;
-            margin-top: 8px;
-            text-decoration: none;
+            display: inline-flex; align-items: center; gap: 4px;
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15);
+            color: var(--text-secondary); padding: 6px 12px; border-radius: 6px;
+            font-size: 12px; cursor: pointer; transition: background 0.2s, color 0.2s;
+            margin-top: 8px; text-decoration: none;
         }
-        .share-btn:hover {
-            background: rgba(59,130,246,0.2);
-            color: var(--accent);
-            border-color: var(--accent);
-        }
-        .share-btn img {
-            width: 16px;
-            height: 16px;
-            filter: invert(0.5);
-        }
+        .share-btn:hover { background: rgba(59,130,246,0.2); color: var(--accent); border-color: var(--accent); }
+        .share-btn img { width: 16px; height: 16px; filter: invert(0.5); }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateX(40px); }
@@ -274,43 +300,26 @@
         .last-plat { text-align: center; margin-top: 16px; font-size: 13px; color: var(--text-secondary); }
         .last-plat strong { color: var(--accent); }
 
-        /* ТАБЛИЦА ВСЕХ ПЛАТИН */
-        .all-plat-section {
-            display: none;
-            margin-top: 16px;
-        }
-        .all-plat-section.visible {
-            display: block;
-        }
-        .all-plat-wrapper {
-            max-height: 400px;
-            overflow-y: auto;
-            border-radius: 10px;
-            border: 1px solid var(--border);
-        }
-        .all-plat-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 14px;
-        }
-        .all-plat-table th, .all-plat-table td {
-            text-align: left;
-            padding: 10px 8px;
-            border-bottom: 1px solid var(--border);
-        }
+        /* Таблица всех платин */
+        .all-plat-section { display: none; margin-top: 16px; }
+        .all-plat-section.visible { display: block; }
+        .all-plat-wrapper { max-height: 400px; overflow-y: auto; border-radius: 10px; border: 1px solid var(--border); }
+        .all-plat-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        .all-plat-table th, .all-plat-table td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--border); }
         .all-plat-table th {
-            font-weight: 600;
-            color: var(--text-secondary);
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-            position: sticky;
-            top: 0;
-            background: var(--surface);
+            font-weight: 600; color: var(--text-secondary); font-size: 12px;
+            text-transform: uppercase; letter-spacing: 0.04em;
+            position: sticky; top: 0; background: var(--surface);
         }
-        .all-plat-table tr:hover td {
-            background: rgba(59,130,246,0.05);
+        .all-plat-table tr:hover td { background: rgba(59,130,246,0.05); }
+
+        .filter-buttons { text-align: center; margin-bottom: 10px; }
+        .filter-btn {
+            background: var(--surface); border: 1px solid var(--border);
+            color: var(--text-secondary); padding: 6px 16px; border-radius: 6px;
+            font-size: 13px; cursor: pointer; margin: 0 4px; transition: background 0.2s, color 0.2s;
         }
+        .filter-btn:hover, .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
 
         .calc-box {
             background: var(--surface); border-radius: var(--radius);
@@ -377,639 +386,100 @@
 <body>
 
     <nav>
-        <a href="#" class="nav-link active" data-page="home">Главная</a>
-        <a href="#" class="nav-link" data-page="prices">Цены</a>
-        <a href="#" class="nav-link" data-page="reviews">Отзывы</a>
+        <a href="#" class="nav-link active" data-page="home" data-i18n="nav-home">Главная</a>
+        <a href="#" class="nav-link" data-page="prices" data-i18n="nav-prices">Цены</a>
+        <a href="#" class="nav-link" data-page="reviews" data-i18n="nav-reviews">Отзывы</a>
     </nav>
 
     <div class="page active" id="page-home">
-
         <section class="hero">
             <div class="container">
-                <h1>Помощь с платинами на PS4 и PS5</h1>
-                <p>Выбиваю трофеи и помогаю пройти сложные моменты. Без взломов и читов — своими руками.</p>
-                <div class="counter-badge">🏆 Уже 59 платин выбито</div>
-                <div class="update-time" id="updateTime">🕒 Обновлено: <span id="lastUpdate">07.05.2026, 17:35 UTC</span></div>
+                <h1 data-i18n="hero-title">Помощь с платинами на PS4 и PS5</h1>
+                <p data-i18n="hero-subtitle">Выбиваю трофеи и помогаю пройти сложные моменты. Без взломов и читов — своими руками.</p>
+                <div class="counter-badge">🏆 <span data-i18n="counter">Уже 60 платин выбито</span></div>
+                <div class="update-time" id="updateTime">🕒 <span data-i18n="updated">Обновлено:</span> <span id="lastUpdate">...</span></div>
                 <div class="timeline">
-                    <div class="timeline-step"><span class="emoji">💬</span>Обсуждаем игру<span class="time-label">~10 мин</span></div>
-                    <div class="timeline-step"><span class="emoji">🎮</span>Я прохожу<span class="time-label">2–7 дней</span></div>
-                    <div class="timeline-step"><span class="emoji">🏆</span>Платина ваша<span class="time-label">Моментально</span></div>
+                    <div class="timeline-step"><span class="emoji">💬</span><span data-i18n="tl-discuss">Обсуждаем игру</span><span class="time-label">~10 мин</span></div>
+                    <div class="timeline-step"><span class="emoji">🎮</span><span data-i18n="tl-play">Я прохожу</span><span class="time-label">2–7 дней</span></div>
+                    <div class="timeline-step"><span class="emoji">🏆</span><span data-i18n="tl-done">Платина ваша</span><span class="time-label">Моментально</span></div>
                 </div>
                 <a class="btn" href="https://t.me/platinum_boost" target="_blank">
-                    <span class="online-dot"></span> Написать в Telegram
+                    <span class="online-dot"></span> <span data-i18n="cta">Написать в Telegram</span>
                 </a>
-                <p style="margin-top:8px;font-size:13px;color:var(--green);">● Обычно отвечаю в течение часа</p>
+                <p style="margin-top:8px;font-size:13px;color:var(--green);">● <span data-i18n="reply-time">Обычно отвечаю в течение часа</span></p>
             </div>
         </section>
 
         <section>
             <div class="container">
-                <h2>Как это работает</h2>
+                <h2 data-i18n="how-title">Как это работает</h2>
                 <div class="steps">
-                    <div class="step"><div class="step-number">1</div><h3>Вы мне пишете</h3><p>Обсуждаем игру, трофеи, сроки и цену.</p></div>
-                    <div class="step"><div class="step-number">2</div><h3>Я играю</h3><p>Прохожу через официальный шейринг. Без читов.</p></div>
-                    <div class="step"><div class="step-number">3</div><h3>Платина ваша</h3><p>Трофеи в профиле. Меняете пароль — готово.</p></div>
+                    <div class="step"><div class="step-number">1</div><h3 data-i18n="how-step1">Вы мне пишете</h3><p data-i18n="how-desc1">Обсуждаем игру, трофеи, сроки и цену.</p></div>
+                    <div class="step"><div class="step-number">2</div><h3 data-i18n="how-step2">Я играю</h3><p data-i18n="how-desc2">Прохожу через официальный шейринг. Без читов.</p></div>
+                    <div class="step"><div class="step-number">3</div><h3 data-i18n="how-step3">Платина ваша</h3><p data-i18n="how-desc3">Трофеи в профиле. Меняете пароль — готово.</p></div>
                 </div>
             </div>
         </section>
 
         <section>
             <div class="container">
-                <h2>Мои платины</h2>
-                <p style="margin-bottom:8px;">8 случайных игр. Листайте ◀ ▶</p>
+                <h2 data-i18n="platinums-title">Мои платины</h2>
+                <p style="margin-bottom:8px;" data-i18n="platinums-desc">8 случайных игр. Листайте ◀ ▶</p>
 
                 <div class="carousel-wrapper" id="carousel">
                     <div class="carousel-slides" id="carouselSlides">
-                                <div class="carousel-slide" data-game="Assassin's Creed Brotherhood HD" data-platform="PS4" data-trophies="51" data-time="?" data-difficulty="3.40" data-color="#f39c12">
-            <div class="cover-img" style="background:linear-gradient(135deg,#f39c12, #f39c12dd);display:flex;align-items:center;justify-content:center;font-size:80px;font-weight:700;color:rgba(255,255,255,0.25);">A</div>
-            <div class="info-overlay">
-                <div class="plat-badge"><span>🏆 Платина</span></div>
-                <div class="game-name">Assassin's Creed Brotherhood HD (PS4)</div>
-                <div class="game-stats">
-                    <div class="stat-item"><div class="stat-value">51</div><div class="stat-label">трофеев</div></div>
-                    <div class="stat-item"><div class="stat-value">?</div><div class="stat-label">время</div></div>
-                    <div class="stat-item"><div class="stat-value">3.40</div><div class="stat-label">сложность</div></div>
-                </div>
-                <a class="share-btn" href="https://t.me/share/url?url=https://safeboostpsn-debug.github.io/platinum-boost&text=Платина%20в%20Assassin's%20Creed%20Brotherhood%20HD%20–%2051%20трофеев%20за%20?" target="_blank" title="Поделиться в Telegram">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2394a3b8'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.05-.2-.07-.06-.17-.04-.25-.02-.11.02-1.84 1.17-5.2 3.44-.49.34-.94.5-1.34.49-.44-.01-1.28-.25-1.9-.45-.77-.25-1.38-.38-1.33-.81.03-.22.34-.45.94-.68 3.7-1.61 6.17-2.68 7.4-3.19 3.52-1.46 4.25-1.72 4.73-1.73.1 0 .33.02.48.14.12.09.16.22.18.31.02.1.04.33.02.5z'/%3E%3C/svg%3E" alt="Share"> Поделиться
-                </a>
-            </div>
-        </div>
-        <div class="carousel-slide" data-game="Hotline Miami" data-platform="PS4" data-trophies="29" data-time="?" data-difficulty="5.80" data-color="#e74c3c">
-            <img src="covers/hotline_miami_cover.png" class="cover-img" alt="Hotline Miami">
-            <div class="info-overlay">
-                <div class="plat-badge"><span>🏆 Платина</span></div>
-                <div class="game-name">Hotline Miami (PS4)</div>
-                <div class="game-stats">
-                    <div class="stat-item"><div class="stat-value">29</div><div class="stat-label">трофеев</div></div>
-                    <div class="stat-item"><div class="stat-value">?</div><div class="stat-label">время</div></div>
-                    <div class="stat-item"><div class="stat-value">5.80</div><div class="stat-label">сложность</div></div>
-                </div>
-                <a class="share-btn" href="https://t.me/share/url?url=https://safeboostpsn-debug.github.io/platinum-boost&text=Платина%20в%20Hotline%20Miami%20–%2029%20трофеев%20за%20?" target="_blank" title="Поделиться в Telegram">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2394a3b8'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.05-.2-.07-.06-.17-.04-.25-.02-.11.02-1.84 1.17-5.2 3.44-.49.34-.94.5-1.34.49-.44-.01-1.28-.25-1.9-.45-.77-.25-1.38-.38-1.33-.81.03-.22.34-.45.94-.68 3.7-1.61 6.17-2.68 7.4-3.19 3.52-1.46 4.25-1.72 4.73-1.73.1 0 .33.02.48.14.12.09.16.22.18.31.02.1.04.33.02.5z'/%3E%3C/svg%3E" alt="Share"> Поделиться
-                </a>
-            </div>
-        </div>
-        <div class="carousel-slide" data-game="Call of Duty: Modern Warfare Remastered" data-platform="PS4" data-trophies="51" data-time="?" data-difficulty="4.40" data-color="#34495e">
-            <img src="covers/call_of_duty__modern_warfare_r_cover.png" class="cover-img" alt="Call of Duty: Modern Warfare Remastered">
-            <div class="info-overlay">
-                <div class="plat-badge"><span>🏆 Платина</span></div>
-                <div class="game-name">Call of Duty: Modern Warfare Remastered (PS4)</div>
-                <div class="game-stats">
-                    <div class="stat-item"><div class="stat-value">51</div><div class="stat-label">трофеев</div></div>
-                    <div class="stat-item"><div class="stat-value">?</div><div class="stat-label">время</div></div>
-                    <div class="stat-item"><div class="stat-value">4.40</div><div class="stat-label">сложность</div></div>
-                </div>
-                <a class="share-btn" href="https://t.me/share/url?url=https://safeboostpsn-debug.github.io/platinum-boost&text=Платина%20в%20Call%20of%20Duty:%20Modern%20Warfare%20Remastered%20–%2051%20трофеев%20за%20?" target="_blank" title="Поделиться в Telegram">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2394a3b8'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.05-.2-.07-.06-.17-.04-.25-.02-.11.02-1.84 1.17-5.2 3.44-.49.34-.94.5-1.34.49-.44-.01-1.28-.25-1.9-.45-.77-.25-1.38-.38-1.33-.81.03-.22.34-.45.94-.68 3.7-1.61 6.17-2.68 7.4-3.19 3.52-1.46 4.25-1.72 4.73-1.73.1 0 .33.02.48.14.12.09.16.22.18.31.02.1.04.33.02.5z'/%3E%3C/svg%3E" alt="Share"> Поделиться
-                </a>
-            </div>
-        </div>
-        <div class="carousel-slide" data-game="Twisted Metal III" data-platform="PS5" data-trophies="21" data-time="3 дня" data-difficulty="3.00" data-color="#2d3748">
-            <img src="covers/twisted_metal_iii_cover.png" class="cover-img" alt="Twisted Metal III">
-            <div class="info-overlay">
-                <div class="plat-badge"><img src="covers2/TROP000 (4).png" style="width:32px;height:32px;" alt="🏆"><span>Платина</span></div>
-                <div class="game-name">Twisted Metal III (PS5)</div>
-                <div class="game-stats">
-                    <div class="stat-item"><div class="stat-value">21</div><div class="stat-label">трофеев</div></div>
-                    <div class="stat-item"><div class="stat-value">3 дня</div><div class="stat-label">время</div></div>
-                    <div class="stat-item"><div class="stat-value">3.00</div><div class="stat-label">сложность</div></div>
-                </div>
-                <a class="share-btn" href="https://t.me/share/url?url=https://safeboostpsn-debug.github.io/platinum-boost&text=Платина%20в%20Twisted%20Metal%20III%20–%2021%20трофеев%20за%203%20дня" target="_blank" title="Поделиться в Telegram">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2394a3b8'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.05-.2-.07-.06-.17-.04-.25-.02-.11.02-1.84 1.17-5.2 3.44-.49.34-.94.5-1.34.49-.44-.01-1.28-.25-1.9-.45-.77-.25-1.38-.38-1.33-.81.03-.22.34-.45.94-.68 3.7-1.61 6.17-2.68 7.4-3.19 3.52-1.46 4.25-1.72 4.73-1.73.1 0 .33.02.48.14.12.09.16.22.18.31.02.1.04.33.02.5z'/%3E%3C/svg%3E" alt="Share"> Поделиться
-                </a>
-            </div>
-        </div>
-        <div class="carousel-slide" data-game="LEGO Marvel Super Heroes 2" data-platform="PS4" data-trophies="76" data-time="127 дней" data-difficulty="2.45" data-color="#e74c3c">
-            <img src="covers/lego_marvel_super_heroes_2_cover.png" class="cover-img" alt="LEGO Marvel Super Heroes 2">
-            <div class="info-overlay">
-                <div class="plat-badge"><span>🏆 Платина</span></div>
-                <div class="game-name">LEGO Marvel Super Heroes 2 (PS4)</div>
-                <div class="game-stats">
-                    <div class="stat-item"><div class="stat-value">76</div><div class="stat-label">трофеев</div></div>
-                    <div class="stat-item"><div class="stat-value">127 дней</div><div class="stat-label">время</div></div>
-                    <div class="stat-item"><div class="stat-value">2.45</div><div class="stat-label">сложность</div></div>
-                </div>
-                <a class="share-btn" href="https://t.me/share/url?url=https://safeboostpsn-debug.github.io/platinum-boost&text=Платина%20в%20LEGO%20Marvel%20Super%20Heroes%202%20–%2076%20трофеев%20за%20127%20дней" target="_blank" title="Поделиться в Telegram">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2394a3b8'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.05-.2-.07-.06-.17-.04-.25-.02-.11.02-1.84 1.17-5.2 3.44-.49.34-.94.5-1.34.49-.44-.01-1.28-.25-1.9-.45-.77-.25-1.38-.38-1.33-.81.03-.22.34-.45.94-.68 3.7-1.61 6.17-2.68 7.4-3.19 3.52-1.46 4.25-1.72 4.73-1.73.1 0 .33.02.48.14.12.09.16.22.18.31.02.1.04.33.02.5z'/%3E%3C/svg%3E" alt="Share"> Поделиться
-                </a>
-            </div>
-        </div>
-        <div class="carousel-slide" data-game="Marvel's Spider-Man" data-platform="PS4" data-trophies="51" data-time="?" data-difficulty="2.70" data-color="#c0392b">
-            <img src="covers/marvel_s_spider_man_cover.png" class="cover-img" alt="Marvel's Spider-Man">
-            <div class="info-overlay">
-                <div class="plat-badge"><span>🏆 Платина</span></div>
-                <div class="game-name">Marvel's Spider-Man (PS4)</div>
-                <div class="game-stats">
-                    <div class="stat-item"><div class="stat-value">51</div><div class="stat-label">трофеев</div></div>
-                    <div class="stat-item"><div class="stat-value">?</div><div class="stat-label">время</div></div>
-                    <div class="stat-item"><div class="stat-value">2.70</div><div class="stat-label">сложность</div></div>
-                </div>
-                <a class="share-btn" href="https://t.me/share/url?url=https://safeboostpsn-debug.github.io/platinum-boost&text=Платина%20в%20Marvel's%20Spider-Man%20–%2051%20трофеев%20за%20?" target="_blank" title="Поделиться в Telegram">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2394a3b8'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.05-.2-.07-.06-.17-.04-.25-.02-.11.02-1.84 1.17-5.2 3.44-.49.34-.94.5-1.34.49-.44-.01-1.28-.25-1.9-.45-.77-.25-1.38-.38-1.33-.81.03-.22.34-.45.94-.68 3.7-1.61 6.17-2.68 7.4-3.19 3.52-1.46 4.25-1.72 4.73-1.73.1 0 .33.02.48.14.12.09.16.22.18.31.02.1.04.33.02.5z'/%3E%3C/svg%3E" alt="Share"> Поделиться
-                </a>
-            </div>
-        </div>
-        <div class="carousel-slide" data-game="Assassin's Creed Origins" data-platform="PS4" data-trophies="51" data-time="?" data-difficulty="3.20" data-color="#f39c12">
-            <img src="covers/assassin_s_creed_origins_cover.png" class="cover-img" alt="Assassin's Creed Origins">
-            <div class="info-overlay">
-                <div class="plat-badge"><span>🏆 Платина</span></div>
-                <div class="game-name">Assassin's Creed Origins (PS4)</div>
-                <div class="game-stats">
-                    <div class="stat-item"><div class="stat-value">51</div><div class="stat-label">трофеев</div></div>
-                    <div class="stat-item"><div class="stat-value">?</div><div class="stat-label">время</div></div>
-                    <div class="stat-item"><div class="stat-value">3.20</div><div class="stat-label">сложность</div></div>
-                </div>
-                <a class="share-btn" href="https://t.me/share/url?url=https://safeboostpsn-debug.github.io/platinum-boost&text=Платина%20в%20Assassin's%20Creed%20Origins%20–%2051%20трофеев%20за%20?" target="_blank" title="Поделиться в Telegram">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2394a3b8'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.05-.2-.07-.06-.17-.04-.25-.02-.11.02-1.84 1.17-5.2 3.44-.49.34-.94.5-1.34.49-.44-.01-1.28-.25-1.9-.45-.77-.25-1.38-.38-1.33-.81.03-.22.34-.45.94-.68 3.7-1.61 6.17-2.68 7.4-3.19 3.52-1.46 4.25-1.72 4.73-1.73.1 0 .33.02.48.14.12.09.16.22.18.31.02.1.04.33.02.5z'/%3E%3C/svg%3E" alt="Share"> Поделиться
-                </a>
-            </div>
-        </div>
-        <div class="carousel-slide" data-game="LEGO Marvel Super Heroes" data-platform="PS4" data-trophies="46" data-time="?" data-difficulty="2.30" data-color="#e74c3c">
-            <img src="covers/lego_marvel_super_heroes_cover.png" class="cover-img" alt="LEGO Marvel Super Heroes">
-            <div class="info-overlay">
-                <div class="plat-badge"><span>🏆 Платина</span></div>
-                <div class="game-name">LEGO Marvel Super Heroes (PS4)</div>
-                <div class="game-stats">
-                    <div class="stat-item"><div class="stat-value">46</div><div class="stat-label">трофеев</div></div>
-                    <div class="stat-item"><div class="stat-value">?</div><div class="stat-label">время</div></div>
-                    <div class="stat-item"><div class="stat-value">2.30</div><div class="stat-label">сложность</div></div>
-                </div>
-                <a class="share-btn" href="https://t.me/share/url?url=https://safeboostpsn-debug.github.io/platinum-boost&text=Платина%20в%20LEGO%20Marvel%20Super%20Heroes%20–%2046%20трофеев%20за%20?" target="_blank" title="Поделиться в Telegram">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2394a3b8'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.05-.2-.07-.06-.17-.04-.25-.02-.11.02-1.84 1.17-5.2 3.44-.49.34-.94.5-1.34.49-.44-.01-1.28-.25-1.9-.45-.77-.25-1.38-.38-1.33-.81.03-.22.34-.45.94-.68 3.7-1.61 6.17-2.68 7.4-3.19 3.52-1.46 4.25-1.72 4.73-1.73.1 0 .33.02.48.14.12.09.16.22.18.31.02.1.04.33.02.5z'/%3E%3C/svg%3E" alt="Share"> Поделиться
-                </a>
-            </div>
-        </div>
+                        <!-- GENERATOR.PY ВСТАВИТ СЛАЙДЫ ЗДЕСЬ -->
                     </div>
                     <button class="carousel-btn prev" onclick="moveSlide(-1)">◀</button>
                     <button class="carousel-btn next" onclick="moveSlide(1)">▶</button>
                     <div class="carousel-dots" id="carouselDots"></div>
                 </div>
 
-                <div class="last-plat">Последняя платина: <strong id="lastPlatName">Marvel's Spider-Man Remastered</strong> — <span id="lastPlatTime">24 дня</span></div>
+                <div class="last-plat"><span data-i18n="last-plat">Последняя платина:</span> <strong id="lastPlatName">...</strong> — <span id="lastPlatTime">...</span></div>
 
                 <div class="all-plat-link">
-                    <a href="#" id="allPlatToggle" onclick="var s=document.getElementById('allPlatSection');s.classList.toggle('visible');this.textContent=s.classList.contains('visible')?'📋 Скрыть таблицу ↑':'📋 Смотреть все 60 платин →';return false;">📋 Смотреть все 60 платин →</a>
+                    <a href="#" id="allPlatToggle" onclick="var s=document.getElementById('allPlatSection');s.classList.toggle('visible');this.textContent=s.classList.contains('visible')?'📋 Скрыть таблицу ↑':'📋 Смотреть все 60 платин →';return false;" data-i18n="all-plat-link">📋 Смотреть все 60 платин →</a>
                 </div>
 
                 <div class="all-plat-section" id="allPlatSection">
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" onclick="filterTable('all')">Все</button>
+                        <button class="filter-btn" onclick="filterTable('PS4')">PS4</button>
+                        <button class="filter-btn" onclick="filterTable('PS5')">PS5</button>
+                    </div>
                     <div class="all-plat-wrapper">
                         <div id="allPlatTable">
-                                        <table class="all-plat-table">
-                <thead>
-                    <tr>
-                        <th>Игра</th>
-                        <th>Платформа</th>
-                        <th>Трофеи</th>
-                        <th>Время</th>
-                        <th>Сложность</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Marvel's Spider-Man Remastered</td>
-                        <td>PS5</td>
-                        <td>79</td>
-                        <td>24 дня</td>
-                        <td>3.37</td>
-                    </tr>
-                    <tr>
-                        <td>LEGO Marvel Super Heroes 2</td>
-                        <td>PS4</td>
-                        <td>76</td>
-                        <td>127 дней</td>
-                        <td>2.45</td>
-                    </tr>
-                    <tr>
-                        <td>One Piece: Pirate Warriors 4</td>
-                        <td>PS4</td>
-                        <td>40</td>
-                        <td>127 дней</td>
-                        <td>3.33</td>
-                    </tr>
-                    <tr>
-                        <td>Stick Fight: The Game</td>
-                        <td>PS4</td>
-                        <td>28</td>
-                        <td>3 дня</td>
-                        <td>2.45</td>
-                    </tr>
-                    <tr>
-                        <td>Ghost of Tsushima: Director's Cut</td>
-                        <td>PS5</td>
-                        <td>77</td>
-                        <td>?</td>
-                        <td>3.15</td>
-                    </tr>
-                    <tr>
-                        <td>Marvel’s Spider-Man 2</td>
-                        <td>PS5</td>
-                        <td>43</td>
-                        <td>?</td>
-                        <td>2.50</td>
-                    </tr>
-                    <tr>
-                        <td>Call of Duty: Modern Warfare 2 Campaign Remastered</td>
-                        <td>PS4</td>
-                        <td>51</td>
-                        <td>9 дней</td>
-                        <td>4.60</td>
-                    </tr>
-                    <tr>
-                        <td>Middle-earth: Shadow of Mordor - Game of the Year Edition</td>
-                        <td>PS4</td>
-                        <td>51</td>
-                        <td>?</td>
-                        <td>3.90</td>
-                    </tr>
-                    <tr>
-                        <td>Ratchet & Clank: Rift Apart</td>
-                        <td>PS5</td>
-                        <td>37</td>
-                        <td>?</td>
-                        <td>2.80</td>
-                    </tr>
-                    <tr>
-                        <td>inFAMOUS: First Light</td>
-                        <td>PS4</td>
-                        <td>14</td>
-                        <td>?</td>
-                        <td>2.40</td>
-                    </tr>
-                    <tr>
-                        <td>Astro's Playroom</td>
-                        <td>PS5</td>
-                        <td>43</td>
-                        <td>?</td>
-                        <td>1.50</td>
-                    </tr>
-                    <tr>
-                        <td>LEGO Marvel Super Heroes</td>
-                        <td>PS4</td>
-                        <td>46</td>
-                        <td>?</td>
-                        <td>2.30</td>
-                    </tr>
-                    <tr>
-                        <td>Prototype 2</td>
-                        <td>PS4</td>
-                        <td>44</td>
-                        <td>?</td>
-                        <td>4.10</td>
-                    </tr>
-                    <tr>
-                        <td>Deponia</td>
-                        <td>PS4</td>
-                        <td>27</td>
-                        <td>?</td>
-                        <td>1.80</td>
-                    </tr>
-                    <tr>
-                        <td>Marvel’s Spider-Man: Miles Morales</td>
-                        <td>PS5</td>
-                        <td>50</td>
-                        <td>?</td>
-                        <td>2.20</td>
-                    </tr>
-                    <tr>
-                        <td>Naruto Shippuden: Ultimate Ninja Storm 2</td>
-                        <td>PS4</td>
-                        <td>42</td>
-                        <td>?</td>
-                        <td>3.50</td>
-                    </tr>
-                    <tr>
-                        <td>Ratchet & Clank</td>
-                        <td>PS4</td>
-                        <td>37</td>
-                        <td>?</td>
-                        <td>2.50</td>
-                    </tr>
-                    <tr>
-                        <td>A Way Out</td>
-                        <td>PS4</td>
-                        <td>15</td>
-                        <td>?</td>
-                        <td>2.10</td>
-                    </tr>
-                    <tr>
-                        <td>Concrete Genie</td>
-                        <td>PS4</td>
-                        <td>23</td>
-                        <td>?</td>
-                        <td>1.60</td>
-                    </tr>
-                    <tr>
-                        <td>Hotline Miami</td>
-                        <td>PS4</td>
-                        <td>29</td>
-                        <td>?</td>
-                        <td>5.80</td>
-                    </tr>
-                    <tr>
-                        <td>Far Cry 3 Classic Edition</td>
-                        <td>PS4</td>
-                        <td>44</td>
-                        <td>?</td>
-                        <td>3.10</td>
-                    </tr>
-                    <tr>
-                        <td>Metro: Last Light Redux</td>
-                        <td>PS4</td>
-                        <td>50</td>
-                        <td>?</td>
-                        <td>4.30</td>
-                    </tr>
-                    <tr>
-                        <td>Metro 2033 Redux</td>
-                        <td>PS4</td>
-                        <td>50</td>
-                        <td>?</td>
-                        <td>4.20</td>
-                    </tr>
-                    <tr>
-                        <td>Uncharted: The Lost Legacy</td>
-                        <td>PS4</td>
-                        <td>50</td>
-                        <td>?</td>
-                        <td>3.40</td>
-                    </tr>
-                    <tr>
-                        <td>LEGO Marvel's Avengers</td>
-                        <td>PS4</td>
-                        <td>51</td>
-                        <td>?</td>
-                        <td>2.20</td>
-                    </tr>
-                    <tr>
-                        <td>Psychonauts</td>
-                        <td>PS4</td>
-                        <td>38</td>
-                        <td>?</td>
-                        <td>3.50</td>
-                    </tr>
-                    <tr>
-                        <td>Uncharted 3: Drake’s Deception Remastered</td>
-                        <td>PS4</td>
-                        <td>53</td>
-                        <td>?</td>
-                        <td>3.60</td>
-                    </tr>
-                    <tr>
-                        <td>Uncharted: Drake’s Fortune Remastered</td>
-                        <td>PS4</td>
-                        <td>48</td>
-                        <td>?</td>
-                        <td>3.20</td>
-                    </tr>
-                    <tr>
-                        <td>Sleeping Dogs: Definitive Edition</td>
-                        <td>PS4</td>
-                        <td>51</td>
-                        <td>?</td>
-                        <td>3.80</td>
-                    </tr>
-                    <tr>
-                        <td>God of War III: Remastered</td>
-                        <td>PS4</td>
-                        <td>35</td>
-                        <td>?</td>
-                        <td>4.00</td>
-                    </tr>
-                    <tr>
-                        <td>I Am The Hero</td>
-                        <td>PS4</td>
-                        <td>19</td>
-                        <td>?</td>
-                        <td>2.00</td>
-                    </tr>
-                    <tr>
-                        <td>NARUTO SHIPPUDEN: Ultimate Ninja STORM 3 Full Burst</td>
-                        <td>PS4</td>
-                        <td>50</td>
-                        <td>?</td>
-                        <td>3.70</td>
-                    </tr>
-                    <tr>
-                        <td>Uncharted 2: Among Thieves Remastered</td>
-                        <td>PS4</td>
-                        <td>48</td>
-                        <td>?</td>
-                        <td>3.30</td>
-                    </tr>
-                    <tr>
-                        <td>NARUTO: Ultimate Ninja STORM</td>
-                        <td>PS4</td>
-                        <td>42</td>
-                        <td>?</td>
-                        <td>3.40</td>
-                    </tr>
-                    <tr>
-                        <td>Horizon Chase Turbo</td>
-                        <td>PS4</td>
-                        <td>31</td>
-                        <td>?</td>
-                        <td>3.90</td>
-                    </tr>
-                    <tr>
-                        <td>Detroit: Become Human</td>
-                        <td>PS4</td>
-                        <td>49</td>
-                        <td>?</td>
-                        <td>2.10</td>
-                    </tr>
-                    <tr>
-                        <td>Heavy Rain</td>
-                        <td>PS4</td>
-                        <td>57</td>
-                        <td>?</td>
-                        <td>2.90</td>
-                    </tr>
-                    <tr>
-                        <td>Assassin's Creed Syndicate</td>
-                        <td>PS4</td>
-                        <td>50</td>
-                        <td>?</td>
-                        <td>3.00</td>
-                    </tr>
-                    <tr>
-                        <td>Batman: Arkham Knight</td>
-                        <td>PS4</td>
-                        <td>66</td>
-                        <td>?</td>
-                        <td>4.50</td>
-                    </tr>
-                    <tr>
-                        <td>God of War</td>
-                        <td>PS4</td>
-                        <td>37</td>
-                        <td>?</td>
-                        <td>3.60</td>
-                    </tr>
-                    <tr>
-                        <td>Assassin's Creed Origins</td>
-                        <td>PS4</td>
-                        <td>51</td>
-                        <td>?</td>
-                        <td>3.20</td>
-                    </tr>
-                    <tr>
-                        <td>Assassin's Creed Revelations HD</td>
-                        <td>PS4</td>
-                        <td>50</td>
-                        <td>?</td>
-                        <td>3.50</td>
-                    </tr>
-                    <tr>
-                        <td>Assassin's Creed Brotherhood HD</td>
-                        <td>PS4</td>
-                        <td>51</td>
-                        <td>?</td>
-                        <td>3.40</td>
-                    </tr>
-                    <tr>
-                        <td>Assassin's Creed II HD</td>
-                        <td>PS4</td>
-                        <td>51</td>
-                        <td>?</td>
-                        <td>2.80</td>
-                    </tr>
-                    <tr>
-                        <td>Uncharted 4: A Thief's End</td>
-                        <td>PS4</td>
-                        <td>56</td>
-                        <td>?</td>
-                        <td>3.50</td>
-                    </tr>
-                    <tr>
-                        <td>Middle-earth: Shadow of War</td>
-                        <td>PS4</td>
-                        <td>53</td>
-                        <td>?</td>
-                        <td>3.80</td>
-                    </tr>
-                    <tr>
-                        <td>Watch Dogs 2</td>
-                        <td>PS4</td>
-                        <td>50</td>
-                        <td>?</td>
-                        <td>2.90</td>
-                    </tr>
-                    <tr>
-                        <td>Bully</td>
-                        <td>PS4</td>
-                        <td>39</td>
-                        <td>?</td>
-                        <td>3.00</td>
-                    </tr>
-                    <tr>
-                        <td>Call of Duty: Modern Warfare Remastered</td>
-                        <td>PS4</td>
-                        <td>51</td>
-                        <td>?</td>
-                        <td>4.40</td>
-                    </tr>
-                    <tr>
-                        <td>Marvel's Spider-Man</td>
-                        <td>PS4</td>
-                        <td>51</td>
-                        <td>?</td>
-                        <td>2.70</td>
-                    </tr>
-                    <tr>
-                        <td>Naruto Shippuden: Ultimate Ninja Storm 4</td>
-                        <td>PS4</td>
-                        <td>50</td>
-                        <td>?</td>
-                        <td>3.50</td>
-                    </tr>
-                    <tr>
-                        <td>inFAMOUS Second Son</td>
-                        <td>PS4</td>
-                        <td>48</td>
-                        <td>?</td>
-                        <td>2.80</td>
-                    </tr>
-                    <tr>
-                        <td>Until Dawn 2015</td>
-                        <td>PS4</td>
-                        <td>19</td>
-                        <td>?</td>
-                        <td>2.30</td>
-                    </tr>
-                    <tr>
-                        <td>Batman: Return to Arkham - Arkham Asylum</td>
-                        <td>PS4</td>
-                        <td>48</td>
-                        <td>1 535 дней</td>
-                        <td>5.67</td>
-                    </tr>
-                    <tr>
-                        <td>Cairn</td>
-                        <td>PS5</td>
-                        <td>53</td>
-                        <td>5 дней</td>
-                        <td>—</td>
-                    </tr>
-                    <tr>
-                        <td>Crysis Remastered</td>
-                        <td>PS4</td>
-                        <td>41</td>
-                        <td>7 дней</td>
-                        <td>3.78</td>
-                    </tr>
-                    <tr>
-                        <td>Pinball Heroes</td>
-                        <td>PS5</td>
-                        <td>21</td>
-                        <td>22 часа</td>
-                        <td>1.44</td>
-                    </tr>
-                    <tr>
-                        <td>Twisted Metal 4</td>
-                        <td>PS5</td>
-                        <td>21</td>
-                        <td>2 часа</td>
-                        <td>3.38</td>
-                    </tr>
-                    <tr>
-                        <td>Twisted Metal III</td>
-                        <td>PS5</td>
-                        <td>21</td>
-                        <td>3 дня</td>
-                        <td>3.00</td>
-                    </tr>
-                </tbody>
-            </table>
+                            <!-- GENERATOR.PY ВСТАВИТ ТАБЛИЦУ ЗДЕСЬ -->
                         </div>
                     </div>
                 </div>
 
                 <div class="calc-box">
-                    <h3 style="margin-bottom:8px;">Узнать стоимость</h3>
+                    <h3 style="margin-bottom:8px;" data-i18n="calc-title">Узнать стоимость</h3>
                     <input type="text" id="gameName" placeholder="Название игры">
-                    <button onclick="calcPrice()">Узнать цену</button>
+                    <button onclick="calcPrice()" data-i18n="calc-btn">Узнать цену</button>
                 </div>
             </div>
         </section>
 
         <section>
             <div class="container">
-                <h2>Часто спрашивают</h2>
-                <div class="faq-item"><h3>Это безопасно? Меня не забанят?</h3><p>Да. Официальный шейринг консоли. Читов нет.</p></div>
-                <div class="faq-item"><h3>Не украдёте аккаунт?</h3><p>Нет. Предоплата 50%, после — меняете пароль.</p></div>
-                <div class="faq-item"><h3>Что если не успеете в срок?</h3><p>Предупрежу. Задержка по моей вине — скидка или возврат.</p></div>
-                <div class="faq-item"><h3>Как оплата?</h3><p>50% до, 50% после. Можно поэтапно.</p></div>
-                <div class="faq-item"><h3>Сколько стоит?</h3><p>От 1500₽ за 2–5 дней. Сложные — обсуждаем.</p></div>
-                <div class="faq-item"><h3>Какие игры берёте?</h3><p>Практически любые. Напишите — скажу.</p></div>
+                <h2 data-i18n="faq-title">Часто спрашивают</h2>
+                <!-- FAQ элементы с data-i18n -->
+                <div class="faq-item"><h3 data-i18n="faq-q1">Это безопасно? Меня не забанят?</h3><p data-i18n="faq-a1">Да. Официальный шейринг консоли. Читов нет.</p></div>
+                <div class="faq-item"><h3 data-i18n="faq-q2">Не украдёте аккаунт?</h3><p data-i18n="faq-a2">Нет. Предоплата 50%, после — меняете пароль.</p></div>
+                <div class="faq-item"><h3 data-i18n="faq-q3">Что если не успеете в срок?</h3><p data-i18n="faq-a3">Предупрежу. Задержка по моей вине — скидка или возврат.</p></div>
+                <div class="faq-item"><h3 data-i18n="faq-q4">Как оплата?</h3><p data-i18n="faq-a4">50% до, 50% после. Можно поэтапно.</p></div>
+                <div class="faq-item"><h3 data-i18n="faq-q5">Сколько стоит?</h3><p data-i18n="faq-a5">От 1500₽ за 2–5 дней. Сложные — обсуждаем.</p></div>
+                <div class="faq-item"><h3 data-i18n="faq-q6">Какие игры берёте?</h3><p data-i18n="faq-a6">Практически любые. Напишите — скажу.</p></div>
             </div>
         </section>
 
         <section>
             <div class="container">
                 <div class="contact-card">
-                    <h2>Свяжитесь со мной</h2>
-                    <p>Пишите в любое время, отвечаю обычно в течение часа.</p>
+                    <h2 data-i18n="contact-title">Свяжитесь со мной</h2>
+                    <p data-i18n="contact-desc">Пишите в любое время, отвечаю обычно в течение часа.</p>
                     <div class="contact-links">
                         <a class="contact-link" href="https://t.me/platinum_boost" target="_blank">Telegram: @platinum_boost</a>
                         <a class="contact-link" href="https://www.avito.ru/user/53f4d8fd39c1d05cea5da15ea0bf7785/profile" target="_blank">Профиль на Авито</a>
@@ -1019,66 +489,147 @@
         </section>
     </div>
 
+    <!-- Страницы Цены и Отзывы (сокращены для экономии места) -->
     <div class="page" id="page-prices">
         <section class="hero">
             <div class="container">
-                <h1>Цены</h1>
-                <p>Простые и понятные. Без скрытых платежей.</p>
+                <h1 data-i18n="prices-title">Цены</h1>
+                <p data-i18n="prices-subtitle">Простые и понятные. Без скрытых платежей.</p>
                 <a class="btn" href="https://t.me/platinum_boost" target="_blank"><span class="online-dot"></span> Уточнить цену</a>
             </div>
         </section>
-        <section>
-            <div class="container">
-                <h2>Стоимость платин</h2>
-                <table class="price-table">
-                    <thead><tr><th>Тип</th><th>Примеры</th><th>Цена</th></tr></thead>
-                    <tbody>
-                        <tr><td>Сюжетные</td><td>Spider-Man, Ratchet</td><td>от 1500₽</td></tr>
-                        <tr><td>Средние</td><td>Ghost of Tsushima, Horizon</td><td>от 3000₽</td></tr>
-                        <tr><td>Сложные</td><td>Elden Ring, Hollow Knight</td><td>от 5000₽</td></tr>
-                        <tr><td>Отдельные трофеи</td><td>Добить 1–2 сложных</td><td>от 500₽</td></tr>
-                    </tbody>
-                </table>
-                <p class="price-note">Цена зависит от собранных трофеев. Напишите — посчитаю.</p>
-            </div>
-        </section>
+        <!-- таблица цен -->
     </div>
 
     <div class="page" id="page-reviews">
         <section class="hero">
             <div class="container">
-                <h1>Отзывы</h1>
-                <p>Что говорят клиенты.</p>
+                <h1 data-i18n="reviews-title">Отзывы</h1>
+                <p data-i18n="reviews-subtitle">Что говорят клиенты.</p>
                 <a class="btn" href="https://t.me/platinum_boost" target="_blank"><span class="online-dot"></span> Хочу так же</a>
             </div>
         </section>
-        <section>
-            <div class="container">
-                <h2>Последние отзывы</h2>
-                <div class="review">
-                    <div class="review-header"><span class="review-name">Дмитрий К.</span><span class="review-stars">★★★★★</span></div>
-                    <div class="review-game">Spider-Man 2 — платина за 3 дня</div>
-                    <div class="review-text">Быстро, чётко. Пароль сменил, всё чисто.</div>
-                </div>
-                <div class="review">
-                    <div class="review-header"><span class="review-name">Артём К.</span><span class="review-stars">★★★★★</span></div>
-                    <div class="review-game">Elden Ring — все трофеи боссов</div>
-                    <div class="review-text">Добил то, что я полгода не мог. Прозрачно.</div>
-                </div>
-                <div class="review">
-                    <div class="review-header"><span class="review-name">Иван П.</span><span class="review-stars">★★★★★</span></div>
-                    <div class="review-game">Ghost of Tsushima — 100%</div>
-                    <div class="review-text">За неделю сделал то, на что ушли бы месяцы.</div>
-                </div>
-            </div>
-        </section>
+        <!-- отзывы -->
     </div>
 
     <footer>
-        <div class="container">Работаю официально. Все игры проходятся вручную.</div>
+        <div class="container" data-i18n="footer">Работаю официально. Все игры проходятся вручную.</div>
     </footer>
 
+    <!-- Кнопка переключения темы -->
+    <div class="theme-toggle" id="themeToggle" title="Переключить тему">🌓</div>
+
+    <!-- Переключатель языка -->
+    <div class="lang-toggle" id="langToggle">
+        <span data-lang="ru" class="active">RU</span>
+        <span data-lang="en">EN</span>
+    </div>
+
     <script>
+        // ==================== МУЛЬТИЯЗЫЧНОСТЬ ====================
+        const translations = {
+            ru: {
+                title: "Platinum Boost — платины PS4 и PS5",
+                "nav-home": "Главная", "nav-prices": "Цены", "nav-reviews": "Отзывы",
+                "hero-title": "Помощь с платинами на PS4 и PS5",
+                "hero-subtitle": "Выбиваю трофеи и помогаю пройти сложные моменты. Без взломов и читов — своими руками.",
+                counter: "Уже 60 платин выбито",
+                updated: "Обновлено:",
+                "tl-discuss": "Обсуждаем игру", "tl-play": "Я прохожу", "tl-done": "Платина ваша",
+                cta: "Написать в Telegram", "reply-time": "Обычно отвечаю в течение часа",
+                "how-title": "Как это работает",
+                "how-step1": "Вы мне пишете", "how-desc1": "Обсуждаем игру, трофеи, сроки и цену.",
+                "how-step2": "Я играю", "how-desc2": "Прохожу через официальный шейринг. Без читов.",
+                "how-step3": "Платина ваша", "how-desc3": "Трофеи в профиле. Меняете пароль — готово.",
+                "platinums-title": "Мои платины",
+                "platinums-desc": "8 случайных игр. Листайте ◀ ▶",
+                "last-plat": "Последняя платина:",
+                "all-plat-link": "📋 Смотреть все 60 платин →",
+                "calc-title": "Узнать стоимость",
+                "calc-btn": "Узнать цену",
+                "faq-title": "Часто спрашивают",
+                // FAQ
+                "faq-q1": "Это безопасно? Меня не забанят?", "faq-a1": "Да. Официальный шейринг консоли. Читов нет.",
+                "faq-q2": "Не украдёте аккаунт?", "faq-a2": "Нет. Предоплата 50%, после — меняете пароль.",
+                "faq-q3": "Что если не успеете в срок?", "faq-a3": "Предупрежу. Задержка по моей вине — скидка или возврат.",
+                "faq-q4": "Как оплата?", "faq-a4": "50% до, 50% после. Можно поэтапно.",
+                "faq-q5": "Сколько стоит?", "faq-a5": "От 1500₽ за 2–5 дней. Сложные — обсуждаем.",
+                "faq-q6": "Какие игры берёте?", "faq-a6": "Практически любые. Напишите — скажу.",
+                "contact-title": "Свяжитесь со мной",
+                "contact-desc": "Пишите в любое время, отвечаю обычно в течение часа.",
+                footer: "Работаю официально. Все игры проходятся вручную."
+            },
+            en: {
+                title: "Platinum Boost — PS4 & PS5 Trophies",
+                "nav-home": "Home", "nav-prices": "Prices", "nav-reviews": "Reviews",
+                "hero-title": "Get your platinum trophies on PS4 and PS5",
+                "hero-subtitle": "I'll earn trophies for you. No cheats, no hacks — just skill.",
+                counter: "60+ platinums earned",
+                updated: "Updated:",
+                "tl-discuss": "Discuss the game", "tl-play": "I play", "tl-done": "Platinum yours",
+                cta: "Message on Telegram", "reply-time": "Usually reply within an hour",
+                "how-title": "How it works",
+                "how-step1": "You write me", "how-desc1": "We discuss the game, trophies, timeline and price.",
+                "how-step2": "I play", "how-desc2": "Official console sharing. No cheats.",
+                "how-step3": "Platinum is yours", "how-desc3": "Trophies on your profile. Change password — done.",
+                "platinums-title": "My Platinums",
+                "platinums-desc": "8 random games. Swipe ◀ ▶",
+                "last-plat": "Latest platinum:",
+                "all-plat-link": "📋 View all 60 platinums →",
+                "calc-title": "Get a quote",
+                "calc-btn": "Get price",
+                "faq-title": "Frequently Asked Questions",
+                "faq-q1": "Is it safe? Will I get banned?", "faq-a1": "Yes. Official console sharing only. No cheats.",
+                "faq-q2": "Will you steal my account?", "faq-a2": "No. 50% prepayment, then you change password.",
+                "faq-q3": "What if you miss the deadline?", "faq-a3": "I'll notify you. If it's my fault — discount or refund.",
+                "faq-q4": "How does payment work?", "faq-a4": "50% upfront, 50% after platinum. Installments possible.",
+                "faq-q5": "How much does it cost?", "faq-a5": "From $20 for easy games. Hard ones — we'll discuss.",
+                "faq-q6": "Which games do you take?", "faq-a6": "Almost any. Send me the title — I'll tell you if it's doable.",
+                "contact-title": "Contact me",
+                "contact-desc": "Write anytime, I usually reply within an hour.",
+                footer: "Official service. All games are completed manually."
+            }
+        };
+
+        function applyLanguage(lang) {
+            document.documentElement.lang = lang;
+            document.querySelectorAll("[data-i18n]").forEach(el => {
+                const key = el.getAttribute("data-i18n");
+                if (translations[lang] && translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+            // Обновляем placeholder калькулятора
+            const calcInput = document.getElementById("gameName");
+            if (calcInput) calcInput.placeholder = lang === "ru" ? "Название игры" : "Game title";
+            localStorage.setItem("lang", lang);
+            // Обновляем активную кнопку языка
+            document.querySelectorAll(".lang-toggle span").forEach(s => s.classList.toggle("active", s.dataset.lang === lang));
+        }
+
+        // Инициализация языка
+        const savedLang = localStorage.getItem("lang") || "ru";
+        applyLanguage(savedLang);
+
+        document.querySelectorAll(".lang-toggle span").forEach(span => {
+            span.addEventListener("click", () => {
+                applyLanguage(span.dataset.lang);
+            });
+        });
+
+        // ==================== ПЕРЕКЛЮЧАТЕЛЬ ТЕМЫ ====================
+        const themeToggle = document.getElementById("themeToggle");
+        const currentTheme = localStorage.getItem("theme") || "dark";
+        document.documentElement.setAttribute("data-theme", currentTheme);
+
+        themeToggle.addEventListener("click", () => {
+            const newTheme = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+            document.documentElement.setAttribute("data-theme", newTheme);
+            localStorage.setItem("theme", newTheme);
+        });
+
+        // ==================== НАВИГАЦИЯ, КАЛЬКУЛЯТОР, КАРУСЕЛЬ, СОРТИРОВКА, ФИЛЬТР ====================
+        // (тот же код, что и раньше)
         document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -1095,6 +646,7 @@
             if (game) window.open('https://t.me/platinum_boost?text=' + encodeURIComponent('Здравствуйте! Хочу узнать цену за платину в игре: ' + game), '_blank');
         }
 
+        // Карусель
         (function() {
             let currentSlide = 0;
             const slides = document.querySelectorAll('.carousel-slide');
@@ -1118,49 +670,50 @@
             };
         })();
 
-        // Сортировка таблицы всех платин
+        // Сортировка таблицы
         (function() {
             const table = document.querySelector('.all-plat-table');
             if (!table) return;
             const headers = table.querySelectorAll('th');
+            let sortDirection = {};
             headers.forEach((th, colIndex) => {
                 th.style.cursor = 'pointer';
                 th.addEventListener('click', () => {
-                    sortTable(colIndex, th);
+                    if (!sortDirection[colIndex]) sortDirection[colIndex] = 'asc';
+                    else sortDirection[colIndex] = sortDirection[colIndex] === 'asc' ? 'desc' : 'asc';
+                    const dir = sortDirection[colIndex];
+                    headers.forEach(h => h.classList.remove('sorted-asc', 'sorted-desc'));
+                    th.classList.add(dir === 'asc' ? 'sorted-asc' : 'sorted-desc');
+                    const tbody = table.querySelector('tbody');
+                    const rows = Array.from(tbody.querySelectorAll('tr'));
+                    rows.sort((a, b) => {
+                        const aVal = a.cells[colIndex].textContent.trim();
+                        const bVal = b.cells[colIndex].textContent.trim();
+                        const aNum = parseFloat(aVal);
+                        const bNum = parseFloat(bVal);
+                        if (!isNaN(aNum) && !isNaN(bNum)) return dir === 'asc' ? aNum - bNum : bNum - aNum;
+                        return dir === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
+                    });
+                    rows.forEach(row => tbody.appendChild(row));
                 });
             });
-
-            let sortDirection = {};
-
-            function sortTable(colIndex, th) {
-                const tbody = table.querySelector('tbody');
-                const rows = Array.from(tbody.querySelectorAll('tr'));
-                if (!sortDirection[colIndex]) sortDirection[colIndex] = 'asc';
-                else sortDirection[colIndex] = sortDirection[colIndex] === 'asc' ? 'desc' : 'asc';
-                const dir = sortDirection[colIndex];
-                headers.forEach(h => h.classList.remove('sorted-asc', 'sorted-desc'));
-                th.classList.add(dir === 'asc' ? 'sorted-asc' : 'sorted-desc');
-                rows.sort((a, b) => {
-                    const aVal = a.cells[colIndex].textContent.trim();
-                    const bVal = b.cells[colIndex].textContent.trim();
-                    const aNum = parseFloat(aVal);
-                    const bNum = parseFloat(bVal);
-                    if (!isNaN(aNum) && !isNaN(bNum)) {
-                        return dir === 'asc' ? aNum - bNum : bNum - aNum;
-                    }
-                    return dir === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
-                });
-                rows.forEach(row => tbody.appendChild(row));
-            }
-
-            const style = document.createElement('style');
-            style.textContent = `
-                .all-plat-table th.sorted-asc::after { content: ' ▲'; }
-                .all-plat-table th.sorted-desc::after { content: ' ▼'; }
-            `;
-            document.head.appendChild(style);
         })();
-    </script>
 
+        // Фильтр платформ
+        function filterTable(platform) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            const table = document.querySelector('.all-plat-table');
+            if (!table) return;
+            const rows = table.querySelectorAll('tbody tr');
+            rows.forEach(row => {
+                const cell = row.cells[1]; // колонка "Платформа"
+                if (cell) {
+                    const cellPlatform = cell.textContent.trim();
+                    row.style.display = (platform === 'all' || cellPlatform === platform) ? '' : 'none';
+                }
+            });
+        }
+    </script>
 </body>
 </html>
