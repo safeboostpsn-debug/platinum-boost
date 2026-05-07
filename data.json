@@ -5,7 +5,8 @@
     "trophies": "48",
     "difficulty": "5.67",
     "time": "1 535 дней",
-    "color": "#2c5282"
+    "color": "#2c5282",
+    "cover": "covers/batman__return_to_arkham___ark_cover.png"
   },
   {
     "name": "Cairn",
@@ -13,7 +14,8 @@
     "trophies": "53",
     "difficulty": "—",
     "time": "5 дней",
-    "color": "#276749"
+    "color": "#276749",
+    "cover": "covers/cairn_cover.png"
   },
   {
     "name": "Crysis Remastered",
@@ -21,7 +23,8 @@
     "trophies": "41",
     "difficulty": "3.78",
     "time": "7 дней",
-    "color": "#9b2c2c"
+    "color": "#9b2c2c",
+    "cover": "covers/crysis_remastered_cover.png"
   },
   {
     "name": "Pinball Heroes",
@@ -29,7 +32,8 @@
     "trophies": "21",
     "difficulty": "1.44",
     "time": "22 часа",
-    "color": "#6b46c1"
+    "color": "#6b46c1",
+    "cover": "covers/pinball_heroes_cover.png"
   },
   {
     "name": "Twisted Metal 4",
@@ -37,7 +41,8 @@
     "trophies": "21",
     "difficulty": "3.38",
     "time": "2 часа",
-    "color": "#c05621"
+    "color": "#c05621",
+    "cover": "covers/twisted_metal_4_cover.png"
   },
   {
     "name": "Twisted Metal III",
@@ -45,6 +50,7 @@
     "trophies": "21",
     "difficulty": "3.00",
     "time": "3 дня",
-    "color": "#2d3748"
+    "color": "#2d3748",
+    "cover": "covers/twisted_metal_iii_cover.png"
   }
 ]
