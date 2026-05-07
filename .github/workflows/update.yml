@@ -27,3 +27,9 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add index.html
           git diff --staged --quiet || (git commit -m "Автообновление платин" && git push)
+          
+      - name: Скачать обложки из PS Store
+        run: python download_covers.py
+
+      - name: Обновить index.html
+        run: python generator.py
