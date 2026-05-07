@@ -1,15 +1,17 @@
 """
-Генератор слайдов карусели. Читает data.json и mapping.json, вставляет в index.html.
+Генератор слайдов карусели. Выбирает 8 случайных платин из data.json.
 """
 import json
 import re
 import os
+import random
 from dataclasses import dataclass
 from typing import Optional, Dict
 
 DATA_FILE = "data.json"
 HTML_FILE = "index.html"
 MAPPING_FILE = "mapping.json"
+CAROUSEL_COUNT = 8
 
 @dataclass
 class GameImages:
@@ -73,16 +75,48 @@ def generate_slides(platinums: list[dict], mapping: Dict[str, GameImages]) -> st
         </div>''')
     return "\n".join(lines)
 
-def update_html(slides_html: str, total: int, last_name: str, last_time: str) -> None:
+def generate_table(platinums: list[dict]) -> str:
+    """Генерирует HTML-таблицу со всеми платинами."""
+    rows = []
+    for p in platinums:
+        rows.append(f'''                    <tr>
+                        <td>{p["name"]}</td>
+                        <td>{p["platform"]}</td>
+                        <td>{p["trophies"]}</td>
+                        <td>{p["time"]}</td>
+                        <td>{p["difficulty"]}</td>
+                    </tr>''')
+    return f'''            <table class="all-plat-table">
+                <thead>
+                    <tr>
+                        <th>Игра</th>
+                        <th>Платформа</th>
+                        <th>Трофеи</th>
+                        <th>Время</th>
+                        <th>Сложность</th>
+                    </tr>
+                </thead>
+                <tbody>
+{chr(10).join(rows)}
+                </tbody>
+            </table>'''
+
+def update_html(slides_html: str, table_html: str, total: int, last_name: str, last_time: str) -> None:
     with open(HTML_FILE, "r", encoding="utf-8") as f:
         html = f.read()
 
+    # Вставляем слайды карусели
     pattern = r'(<div class="carousel-slides"[^>]*>)\s*<!-- GENERATOR\.PY ВСТАВИТ СЛАЙДЫ ЗДЕСЬ -->\s*(</div>\s*<button class="carousel-btn prev")'
     if re.search(pattern, html):
         html = re.sub(pattern, f'\\1\n{slides_html}\n        \\2', html, flags=re.DOTALL)
     else:
         pattern = r'(<div class="carousel-slides"[^>]*>)(.*?)(</div>\s*<button class="carousel-btn prev")'
         html = re.sub(pattern, f'\\1\n{slides_html}\n        \\3', html, flags=re.DOTALL)
+
+    # Вставляем таблицу всех платин
+    pattern = r'(<div id="allPlatTable"[^>]*>)(.*?)(</div>)'
+    if re.search(pattern, html):
+        html = re.sub(pattern, f'\\1\n{table_html}\n        \\3', html, flags=re.DOTALL)
 
     html = re.sub(r'Уже \d+ платин', f'Уже {total} платин', html)
     html = re.sub(r'<strong id="lastPlatName">.*?</strong>', f'<strong id="lastPlatName">{last_name}</strong>', html)
@@ -97,10 +131,18 @@ def main():
     if not platinums:
         print("Нет данных")
         return
+
     mapping = load_mapping()
-    slides_html = generate_slides(platinums, mapping)
+
+    # 8 случайных для карусели
+    carousel_plats = random.sample(platinums, min(CAROUSEL_COUNT, len(platinums)))
+    slides_html = generate_slides(carousel_plats, mapping)
+
+    # Все для таблицы
+    table_html = generate_table(platinums)
+
     last = platinums[0]
-    update_html(slides_html, len(platinums), last["name"], last["time"])
+    update_html(slides_html, table_html, len(platinums), last["name"], last["time"])
     print("Готово.")
 
 if __name__ == "__main__":
