@@ -109,6 +109,18 @@
         .hero { text-align: center; padding: 100px 0 90px; border-top: none; }
         .hero p { font-size: 18px; margin: 0 auto 20px; }
 
+        .update-time {
+            text-align: center;
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: -16px;
+            margin-bottom: 28px;
+        }
+        .update-time span {
+            color: var(--accent);
+            font-weight: 600;
+        }
+        
         .counter-badge {
             display: inline-block; background: var(--surface);
             border: 1px solid var(--border); border-radius: 20px;
@@ -351,6 +363,7 @@
                 <h1>Помощь с платинами на PS4 и PS5</h1>
                 <p>Выбиваю трофеи и помогаю пройти сложные моменты. Без взломов и читов — своими руками.</p>
                 <div class="counter-badge">🏆 Уже 59 платин выбито</div>
+                <div class="update-time" id="updateTime">🕒 Обновлено: <span id="lastUpdate">...</span></div>
                 <div class="timeline">
                     <div class="timeline-step"><span class="emoji">💬</span>Обсуждаем игру<span class="time-label">~10 мин</span></div>
                     <div class="timeline-step"><span class="emoji">🎮</span>Я прохожу<span class="time-label">2–7 дней</span></div>
