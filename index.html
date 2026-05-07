@@ -1067,6 +1067,59 @@
                 document.querySelectorAll('.carousel-dots span').forEach((d, i) => d.classList.toggle('active', i === currentSlide));
             };
         })();
+                // Сортировка таблицы всех платин
+        (function() {
+            const table = document.querySelector('.all-plat-table');
+            if (!table) return;
+            const headers = table.querySelectorAll('th');
+            headers.forEach((th, colIndex) => {
+                th.style.cursor = 'pointer';
+                th.addEventListener('click', () => {
+                    sortTable(colIndex, th);
+                });
+            });
+
+            let sortDirection = {}; // направление сортировки для каждой колонки
+
+            function sortTable(colIndex, th) {
+                const tbody = table.querySelector('tbody');
+                const rows = Array.from(tbody.querySelectorAll('tr'));
+
+                // Определяем направление
+                if (!sortDirection[colIndex]) sortDirection[colIndex] = 'asc';
+                else sortDirection[colIndex] = sortDirection[colIndex] === 'asc' ? 'desc' : 'asc';
+                const dir = sortDirection[colIndex];
+
+                // Убираем активные классы с других заголовков
+                headers.forEach(h => h.classList.remove('sorted-asc', 'sorted-desc'));
+                th.classList.add(dir === 'asc' ? 'sorted-asc' : 'sorted-desc');
+
+                // Сортируем строки
+                rows.sort((a, b) => {
+                    const aVal = a.cells[colIndex].textContent.trim();
+                    const bVal = b.cells[colIndex].textContent.trim();
+                    // Пробуем сортировать как числа
+                    const aNum = parseFloat(aVal);
+                    const bNum = parseFloat(bVal);
+                    if (!isNaN(aNum) && !isNaN(bNum)) {
+                        return dir === 'asc' ? aNum - bNum : bNum - aNum;
+                    }
+                    // Иначе как строки
+                    return dir === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
+                });
+
+                // Пересобираем таблицу
+                rows.forEach(row => tbody.appendChild(row));
+            }
+
+            // Стили для сортировки
+            const style = document.createElement('style');
+            style.textContent = `
+                .all-plat-table th.sorted-asc::after { content: ' ▲'; }
+                .all-plat-table th.sorted-desc::after { content: ' ▼'; }
+            `;
+            document.head.appendChild(style);
+        })();
     </script>
 
 </body>
