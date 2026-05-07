@@ -1,6 +1,6 @@
 """
 Генератор слайдов карусели. Использует mapping.json для привязки изображений.
-Если для игры нет записей в mapping, показывает цветную заглушку.
+Пути к картинкам должны быть указаны относительно корня репозитория.
 """
 import json
 import re
@@ -33,9 +33,17 @@ def load_mapping() -> Dict[str, GameImages]:
     mapping = {}
     for item in data.get("mappings", []):
         game = item["game"].strip().lower()
-        cover = item.get("cover")
-        icon = item.get("icon")
-        mapping[game] = GameImages(cover=cover, icon=icon)
+        cover = item.get("cover", "")
+        icon = item.get("icon", "")
+        # Проверяем, что файл существует
+        if cover and not os.path.exists(cover):
+            print(f"  ⚠ Файл не найден: {cover}")
+            cover = ""
+        if icon and not os.path.exists(icon):
+            print(f"  ⚠ Файл не найден: {icon}")
+            icon = ""
+        mapping[game] = GameImages(cover=cover or None, icon=icon or None)
+    print(f"Загружено маппингов: {len(mapping)}")
     return mapping
 
 def generate_slides(platinums: list[dict], mapping: Dict[str, GameImages]) -> str:
