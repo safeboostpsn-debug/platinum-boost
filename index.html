@@ -109,6 +109,13 @@
         .hero { text-align: center; padding: 100px 0 90px; border-top: none; }
         .hero p { font-size: 18px; margin: 0 auto 20px; }
 
+        .counter-badge {
+            display: inline-block; background: var(--surface);
+            border: 1px solid var(--border); border-radius: 20px;
+            padding: 6px 16px; font-size: 14px; font-weight: 600;
+            color: var(--accent); margin-bottom: 24px;
+        }
+
         .update-time {
             text-align: center;
             font-size: 13px;
@@ -119,13 +126,6 @@
         .update-time span {
             color: var(--accent);
             font-weight: 600;
-        }
-        
-        .counter-badge {
-            display: inline-block; background: var(--surface);
-            border: 1px solid var(--border); border-radius: 20px;
-            padding: 6px 16px; font-size: 14px; font-weight: 600;
-            color: var(--accent); margin-bottom: 24px;
         }
 
         .timeline { display: flex; gap: 12px; margin-bottom: 32px; flex-wrap: wrap; justify-content: center; }
@@ -217,6 +217,32 @@
         }
         .carousel-slide .plat-badge img { width: 32px; height: 32px; }
         .carousel-slide .plat-badge span { font-size: 14px; font-weight: 600; color: #fbbf24; }
+
+        .share-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: var(--text-secondary);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+            margin-top: 8px;
+            text-decoration: none;
+        }
+        .share-btn:hover {
+            background: rgba(59,130,246,0.2);
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+        .share-btn img {
+            width: 16px;
+            height: 16px;
+            filter: invert(0.5);
+        }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateX(40px); }
@@ -362,8 +388,8 @@
             <div class="container">
                 <h1>Помощь с платинами на PS4 и PS5</h1>
                 <p>Выбиваю трофеи и помогаю пройти сложные моменты. Без взломов и читов — своими руками.</p>
-                <div class="counter-badge">🏆 Уже 59 платин выбито</div>
-                <div class="update-time" id="updateTime">🕒 Обновлено: <span id="lastUpdate">07.05.2026, 17:24 UTC</span></div>
+                <div class="counter-badge">🏆 Уже 60 платин выбито</div>
+                <div class="update-time" id="updateTime">🕒 Обновлено: <span id="lastUpdate">...</span></div>
                 <div class="timeline">
                     <div class="timeline-step"><span class="emoji">💬</span>Обсуждаем игру<span class="time-label">~10 мин</span></div>
                     <div class="timeline-step"><span class="emoji">🎮</span>Я прохожу<span class="time-label">2–7 дней</span></div>
@@ -394,109 +420,14 @@
 
                 <div class="carousel-wrapper" id="carousel">
                     <div class="carousel-slides" id="carouselSlides">
-                                <div class="carousel-slide" data-game="Horizon Chase Turbo" data-platform="PS4" data-trophies="31" data-time="?" data-difficulty="3.90" data-color="#f1c40f">
-            <img src="covers/horizon_chase_turbo_cover.png" class="cover-img" alt="Horizon Chase Turbo">
-            <div class="info-overlay">
-                <div class="plat-badge"><span>🏆 Платина</span></div>
-                <div class="game-name">Horizon Chase Turbo (PS4)</div>
-                <div class="game-stats">
-                    <div class="stat-item"><div class="stat-value">31</div><div class="stat-label">трофеев</div></div>
-                    <div class="stat-item"><div class="stat-value">?</div><div class="stat-label">время</div></div>
-                    <div class="stat-item"><div class="stat-value">3.90</div><div class="stat-label">сложность</div></div>
-                </div>
-            </div>
-        </div>
-        <div class="carousel-slide" data-game="Crysis Remastered" data-platform="PS4" data-trophies="41" data-time="7 дней" data-difficulty="3.78" data-color="#9b2c2c">
-            <img src="covers/crysis_remastered_cover.png" class="cover-img" alt="Crysis Remastered">
-            <div class="info-overlay">
-                <div class="plat-badge"><img src="covers2/TROP000 (1).png" style="width:32px;height:32px;" alt="🏆"><span>Платина</span></div>
-                <div class="game-name">Crysis Remastered (PS4)</div>
-                <div class="game-stats">
-                    <div class="stat-item"><div class="stat-value">41</div><div class="stat-label">трофеев</div></div>
-                    <div class="stat-item"><div class="stat-value">7 дней</div><div class="stat-label">время</div></div>
-                    <div class="stat-item"><div class="stat-value">3.78</div><div class="stat-label">сложность</div></div>
-                </div>
-            </div>
-        </div>
-        <div class="carousel-slide" data-game="Metro: Last Light Redux" data-platform="PS4" data-trophies="50" data-time="?" data-difficulty="4.30" data-color="#34495e">
-            <img src="covers/metro__last_light_redux_cover.png" class="cover-img" alt="Metro: Last Light Redux">
-            <div class="info-overlay">
-                <div class="plat-badge"><span>🏆 Платина</span></div>
-                <div class="game-name">Metro: Last Light Redux (PS4)</div>
-                <div class="game-stats">
-                    <div class="stat-item"><div class="stat-value">50</div><div class="stat-label">трофеев</div></div>
-                    <div class="stat-item"><div class="stat-value">?</div><div class="stat-label">время</div></div>
-                    <div class="stat-item"><div class="stat-value">4.30</div><div class="stat-label">сложность</div></div>
-                </div>
-            </div>
-        </div>
-        <div class="carousel-slide" data-game="Uncharted 3: Drake’s Deception Remastered" data-platform="PS4" data-trophies="53" data-time="?" data-difficulty="3.60" data-color="#1abc9c">
-            <img src="covers/uncharted_3__drake_s_deception_cover.png" class="cover-img" alt="Uncharted 3: Drake’s Deception Remastered">
-            <div class="info-overlay">
-                <div class="plat-badge"><span>🏆 Платина</span></div>
-                <div class="game-name">Uncharted 3: Drake’s Deception Remastered (PS4)</div>
-                <div class="game-stats">
-                    <div class="stat-item"><div class="stat-value">53</div><div class="stat-label">трофеев</div></div>
-                    <div class="stat-item"><div class="stat-value">?</div><div class="stat-label">время</div></div>
-                    <div class="stat-item"><div class="stat-value">3.60</div><div class="stat-label">сложность</div></div>
-                </div>
-            </div>
-        </div>
-        <div class="carousel-slide" data-game="inFAMOUS Second Son" data-platform="PS4" data-trophies="48" data-time="?" data-difficulty="2.80" data-color="#e67e22">
-            <img src="covers/infamous_second_son_cover.png" class="cover-img" alt="inFAMOUS Second Son">
-            <div class="info-overlay">
-                <div class="plat-badge"><span>🏆 Платина</span></div>
-                <div class="game-name">inFAMOUS Second Son (PS4)</div>
-                <div class="game-stats">
-                    <div class="stat-item"><div class="stat-value">48</div><div class="stat-label">трофеев</div></div>
-                    <div class="stat-item"><div class="stat-value">?</div><div class="stat-label">время</div></div>
-                    <div class="stat-item"><div class="stat-value">2.80</div><div class="stat-label">сложность</div></div>
-                </div>
-            </div>
-        </div>
-        <div class="carousel-slide" data-game="Heavy Rain" data-platform="PS4" data-trophies="57" data-time="?" data-difficulty="2.90" data-color="#2c3e50">
-            <img src="covers/heavy_rain_cover.png" class="cover-img" alt="Heavy Rain">
-            <div class="info-overlay">
-                <div class="plat-badge"><span>🏆 Платина</span></div>
-                <div class="game-name">Heavy Rain (PS4)</div>
-                <div class="game-stats">
-                    <div class="stat-item"><div class="stat-value">57</div><div class="stat-label">трофеев</div></div>
-                    <div class="stat-item"><div class="stat-value">?</div><div class="stat-label">время</div></div>
-                    <div class="stat-item"><div class="stat-value">2.90</div><div class="stat-label">сложность</div></div>
-                </div>
-            </div>
-        </div>
-        <div class="carousel-slide" data-game="Middle-earth: Shadow of War" data-platform="PS4" data-trophies="53" data-time="?" data-difficulty="3.80" data-color="#7f8c8d">
-            <img src="covers/middle_earth__shadow_of_war_cover.png" class="cover-img" alt="Middle-earth: Shadow of War">
-            <div class="info-overlay">
-                <div class="plat-badge"><span>🏆 Платина</span></div>
-                <div class="game-name">Middle-earth: Shadow of War (PS4)</div>
-                <div class="game-stats">
-                    <div class="stat-item"><div class="stat-value">53</div><div class="stat-label">трофеев</div></div>
-                    <div class="stat-item"><div class="stat-value">?</div><div class="stat-label">время</div></div>
-                    <div class="stat-item"><div class="stat-value">3.80</div><div class="stat-label">сложность</div></div>
-                </div>
-            </div>
-        </div>
-        <div class="carousel-slide" data-game="Batman: Arkham Knight" data-platform="PS4" data-trophies="66" data-time="?" data-difficulty="4.50" data-color="#2c5282">
-            <img src="covers/batman__arkham_knight_cover.png" class="cover-img" alt="Batman: Arkham Knight">
-            <div class="info-overlay">
-                <div class="plat-badge"><span>🏆 Платина</span></div>
-                <div class="game-name">Batman: Arkham Knight (PS4)</div>
-                <div class="game-stats">
-                    <div class="stat-item"><div class="stat-value">66</div><div class="stat-label">трофеев</div></div>
-                    <div class="stat-item"><div class="stat-value">?</div><div class="stat-label">время</div></div>
-                    <div class="stat-item"><div class="stat-value">4.50</div><div class="stat-label">сложность</div></div>
-                </div>
-            </div>
-        </div>
+                        <!-- GENERATOR.PY ВСТАВИТ СЛАЙДЫ ЗДЕСЬ -->
                     </div>
                     <button class="carousel-btn prev" onclick="moveSlide(-1)">◀</button>
                     <button class="carousel-btn next" onclick="moveSlide(1)">▶</button>
                     <div class="carousel-dots" id="carouselDots"></div>
                 </div>
 
-                <div class="last-plat">Последняя платина: <strong id="lastPlatName">Marvel's Spider-Man Remastered</strong> — <span id="lastPlatTime">24 дня</span></div>
+                <div class="last-plat">Последняя платина: <strong id="lastPlatName">...</strong> — <span id="lastPlatTime">...</span></div>
 
                 <div class="all-plat-link">
                     <a href="#" id="allPlatToggle" onclick="var s=document.getElementById('allPlatSection');s.classList.toggle('visible');this.textContent=s.classList.contains('visible')?'📋 Скрыть таблицу ↑':'📋 Смотреть все 60 платин →';return false;">📋 Смотреть все 60 платин →</a>
@@ -505,432 +436,7 @@
                 <div class="all-plat-section" id="allPlatSection">
                     <div class="all-plat-wrapper">
                         <div id="allPlatTable">
-                                        <table class="all-plat-table">
-                <thead>
-                    <tr>
-                        <th>Игра</th>
-                        <th>Платформа</th>
-                        <th>Трофеи</th>
-                        <th>Время</th>
-                        <th>Сложность</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Marvel's Spider-Man Remastered</td>
-                        <td>PS5</td>
-                        <td>79</td>
-                        <td>24 дня</td>
-                        <td>3.37</td>
-                    </tr>
-                    <tr>
-                        <td>LEGO Marvel Super Heroes 2</td>
-                        <td>PS4</td>
-                        <td>76</td>
-                        <td>127 дней</td>
-                        <td>2.45</td>
-                    </tr>
-                    <tr>
-                        <td>One Piece: Pirate Warriors 4</td>
-                        <td>PS4</td>
-                        <td>40</td>
-                        <td>127 дней</td>
-                        <td>3.33</td>
-                    </tr>
-                    <tr>
-                        <td>Stick Fight: The Game</td>
-                        <td>PS4</td>
-                        <td>28</td>
-                        <td>3 дня</td>
-                        <td>2.45</td>
-                    </tr>
-                    <tr>
-                        <td>Ghost of Tsushima: Director's Cut</td>
-                        <td>PS5</td>
-                        <td>77</td>
-                        <td>?</td>
-                        <td>3.15</td>
-                    </tr>
-                    <tr>
-                        <td>Marvel’s Spider-Man 2</td>
-                        <td>PS5</td>
-                        <td>43</td>
-                        <td>?</td>
-                        <td>2.50</td>
-                    </tr>
-                    <tr>
-                        <td>Call of Duty: Modern Warfare 2 Campaign Remastered</td>
-                        <td>PS4</td>
-                        <td>51</td>
-                        <td>9 дней</td>
-                        <td>4.60</td>
-                    </tr>
-                    <tr>
-                        <td>Middle-earth: Shadow of Mordor - Game of the Year Edition</td>
-                        <td>PS4</td>
-                        <td>51</td>
-                        <td>?</td>
-                        <td>3.90</td>
-                    </tr>
-                    <tr>
-                        <td>Ratchet & Clank: Rift Apart</td>
-                        <td>PS5</td>
-                        <td>37</td>
-                        <td>?</td>
-                        <td>2.80</td>
-                    </tr>
-                    <tr>
-                        <td>inFAMOUS: First Light</td>
-                        <td>PS4</td>
-                        <td>14</td>
-                        <td>?</td>
-                        <td>2.40</td>
-                    </tr>
-                    <tr>
-                        <td>Astro's Playroom</td>
-                        <td>PS5</td>
-                        <td>43</td>
-                        <td>?</td>
-                        <td>1.50</td>
-                    </tr>
-                    <tr>
-                        <td>LEGO Marvel Super Heroes</td>
-                        <td>PS4</td>
-                        <td>46</td>
-                        <td>?</td>
-                        <td>2.30</td>
-                    </tr>
-                    <tr>
-                        <td>Prototype 2</td>
-                        <td>PS4</td>
-                        <td>44</td>
-                        <td>?</td>
-                        <td>4.10</td>
-                    </tr>
-                    <tr>
-                        <td>Deponia</td>
-                        <td>PS4</td>
-                        <td>27</td>
-                        <td>?</td>
-                        <td>1.80</td>
-                    </tr>
-                    <tr>
-                        <td>Marvel’s Spider-Man: Miles Morales</td>
-                        <td>PS5</td>
-                        <td>50</td>
-                        <td>?</td>
-                        <td>2.20</td>
-                    </tr>
-                    <tr>
-                        <td>Naruto Shippuden: Ultimate Ninja Storm 2</td>
-                        <td>PS4</td>
-                        <td>42</td>
-                        <td>?</td>
-                        <td>3.50</td>
-                    </tr>
-                    <tr>
-                        <td>Ratchet & Clank</td>
-                        <td>PS4</td>
-                        <td>37</td>
-                        <td>?</td>
-                        <td>2.50</td>
-                    </tr>
-                    <tr>
-                        <td>A Way Out</td>
-                        <td>PS4</td>
-                        <td>15</td>
-                        <td>?</td>
-                        <td>2.10</td>
-                    </tr>
-                    <tr>
-                        <td>Concrete Genie</td>
-                        <td>PS4</td>
-                        <td>23</td>
-                        <td>?</td>
-                        <td>1.60</td>
-                    </tr>
-                    <tr>
-                        <td>Hotline Miami</td>
-                        <td>PS4</td>
-                        <td>29</td>
-                        <td>?</td>
-                        <td>5.80</td>
-                    </tr>
-                    <tr>
-                        <td>Far Cry 3 Classic Edition</td>
-                        <td>PS4</td>
-                        <td>44</td>
-                        <td>?</td>
-                        <td>3.10</td>
-                    </tr>
-                    <tr>
-                        <td>Metro: Last Light Redux</td>
-                        <td>PS4</td>
-                        <td>50</td>
-                        <td>?</td>
-                        <td>4.30</td>
-                    </tr>
-                    <tr>
-                        <td>Metro 2033 Redux</td>
-                        <td>PS4</td>
-                        <td>50</td>
-                        <td>?</td>
-                        <td>4.20</td>
-                    </tr>
-                    <tr>
-                        <td>Uncharted: The Lost Legacy</td>
-                        <td>PS4</td>
-                        <td>50</td>
-                        <td>?</td>
-                        <td>3.40</td>
-                    </tr>
-                    <tr>
-                        <td>LEGO Marvel's Avengers</td>
-                        <td>PS4</td>
-                        <td>51</td>
-                        <td>?</td>
-                        <td>2.20</td>
-                    </tr>
-                    <tr>
-                        <td>Psychonauts</td>
-                        <td>PS4</td>
-                        <td>38</td>
-                        <td>?</td>
-                        <td>3.50</td>
-                    </tr>
-                    <tr>
-                        <td>Uncharted 3: Drake’s Deception Remastered</td>
-                        <td>PS4</td>
-                        <td>53</td>
-                        <td>?</td>
-                        <td>3.60</td>
-                    </tr>
-                    <tr>
-                        <td>Uncharted: Drake’s Fortune Remastered</td>
-                        <td>PS4</td>
-                        <td>48</td>
-                        <td>?</td>
-                        <td>3.20</td>
-                    </tr>
-                    <tr>
-                        <td>Sleeping Dogs: Definitive Edition</td>
-                        <td>PS4</td>
-                        <td>51</td>
-                        <td>?</td>
-                        <td>3.80</td>
-                    </tr>
-                    <tr>
-                        <td>God of War III: Remastered</td>
-                        <td>PS4</td>
-                        <td>35</td>
-                        <td>?</td>
-                        <td>4.00</td>
-                    </tr>
-                    <tr>
-                        <td>I Am The Hero</td>
-                        <td>PS4</td>
-                        <td>19</td>
-                        <td>?</td>
-                        <td>2.00</td>
-                    </tr>
-                    <tr>
-                        <td>NARUTO SHIPPUDEN: Ultimate Ninja STORM 3 Full Burst</td>
-                        <td>PS4</td>
-                        <td>50</td>
-                        <td>?</td>
-                        <td>3.70</td>
-                    </tr>
-                    <tr>
-                        <td>Uncharted 2: Among Thieves Remastered</td>
-                        <td>PS4</td>
-                        <td>48</td>
-                        <td>?</td>
-                        <td>3.30</td>
-                    </tr>
-                    <tr>
-                        <td>NARUTO: Ultimate Ninja STORM</td>
-                        <td>PS4</td>
-                        <td>42</td>
-                        <td>?</td>
-                        <td>3.40</td>
-                    </tr>
-                    <tr>
-                        <td>Horizon Chase Turbo</td>
-                        <td>PS4</td>
-                        <td>31</td>
-                        <td>?</td>
-                        <td>3.90</td>
-                    </tr>
-                    <tr>
-                        <td>Detroit: Become Human</td>
-                        <td>PS4</td>
-                        <td>49</td>
-                        <td>?</td>
-                        <td>2.10</td>
-                    </tr>
-                    <tr>
-                        <td>Heavy Rain</td>
-                        <td>PS4</td>
-                        <td>57</td>
-                        <td>?</td>
-                        <td>2.90</td>
-                    </tr>
-                    <tr>
-                        <td>Assassin's Creed Syndicate</td>
-                        <td>PS4</td>
-                        <td>50</td>
-                        <td>?</td>
-                        <td>3.00</td>
-                    </tr>
-                    <tr>
-                        <td>Batman: Arkham Knight</td>
-                        <td>PS4</td>
-                        <td>66</td>
-                        <td>?</td>
-                        <td>4.50</td>
-                    </tr>
-                    <tr>
-                        <td>God of War</td>
-                        <td>PS4</td>
-                        <td>37</td>
-                        <td>?</td>
-                        <td>3.60</td>
-                    </tr>
-                    <tr>
-                        <td>Assassin's Creed Origins</td>
-                        <td>PS4</td>
-                        <td>51</td>
-                        <td>?</td>
-                        <td>3.20</td>
-                    </tr>
-                    <tr>
-                        <td>Assassin's Creed Revelations HD</td>
-                        <td>PS4</td>
-                        <td>50</td>
-                        <td>?</td>
-                        <td>3.50</td>
-                    </tr>
-                    <tr>
-                        <td>Assassin's Creed Brotherhood HD</td>
-                        <td>PS4</td>
-                        <td>51</td>
-                        <td>?</td>
-                        <td>3.40</td>
-                    </tr>
-                    <tr>
-                        <td>Assassin's Creed II HD</td>
-                        <td>PS4</td>
-                        <td>51</td>
-                        <td>?</td>
-                        <td>2.80</td>
-                    </tr>
-                    <tr>
-                        <td>Uncharted 4: A Thief's End</td>
-                        <td>PS4</td>
-                        <td>56</td>
-                        <td>?</td>
-                        <td>3.50</td>
-                    </tr>
-                    <tr>
-                        <td>Middle-earth: Shadow of War</td>
-                        <td>PS4</td>
-                        <td>53</td>
-                        <td>?</td>
-                        <td>3.80</td>
-                    </tr>
-                    <tr>
-                        <td>Watch Dogs 2</td>
-                        <td>PS4</td>
-                        <td>50</td>
-                        <td>?</td>
-                        <td>2.90</td>
-                    </tr>
-                    <tr>
-                        <td>Bully</td>
-                        <td>PS4</td>
-                        <td>39</td>
-                        <td>?</td>
-                        <td>3.00</td>
-                    </tr>
-                    <tr>
-                        <td>Call of Duty: Modern Warfare Remastered</td>
-                        <td>PS4</td>
-                        <td>51</td>
-                        <td>?</td>
-                        <td>4.40</td>
-                    </tr>
-                    <tr>
-                        <td>Marvel's Spider-Man</td>
-                        <td>PS4</td>
-                        <td>51</td>
-                        <td>?</td>
-                        <td>2.70</td>
-                    </tr>
-                    <tr>
-                        <td>Naruto Shippuden: Ultimate Ninja Storm 4</td>
-                        <td>PS4</td>
-                        <td>50</td>
-                        <td>?</td>
-                        <td>3.50</td>
-                    </tr>
-                    <tr>
-                        <td>inFAMOUS Second Son</td>
-                        <td>PS4</td>
-                        <td>48</td>
-                        <td>?</td>
-                        <td>2.80</td>
-                    </tr>
-                    <tr>
-                        <td>Until Dawn 2015</td>
-                        <td>PS4</td>
-                        <td>19</td>
-                        <td>?</td>
-                        <td>2.30</td>
-                    </tr>
-                    <tr>
-                        <td>Batman: Return to Arkham - Arkham Asylum</td>
-                        <td>PS4</td>
-                        <td>48</td>
-                        <td>1 535 дней</td>
-                        <td>5.67</td>
-                    </tr>
-                    <tr>
-                        <td>Cairn</td>
-                        <td>PS5</td>
-                        <td>53</td>
-                        <td>5 дней</td>
-                        <td>—</td>
-                    </tr>
-                    <tr>
-                        <td>Crysis Remastered</td>
-                        <td>PS4</td>
-                        <td>41</td>
-                        <td>7 дней</td>
-                        <td>3.78</td>
-                    </tr>
-                    <tr>
-                        <td>Pinball Heroes</td>
-                        <td>PS5</td>
-                        <td>21</td>
-                        <td>22 часа</td>
-                        <td>1.44</td>
-                    </tr>
-                    <tr>
-                        <td>Twisted Metal 4</td>
-                        <td>PS5</td>
-                        <td>21</td>
-                        <td>2 часа</td>
-                        <td>3.38</td>
-                    </tr>
-                    <tr>
-                        <td>Twisted Metal III</td>
-                        <td>PS5</td>
-                        <td>21</td>
-                        <td>3 дня</td>
-                        <td>3.00</td>
-                    </tr>
-                </tbody>
-            </table>
+                            <!-- GENERATOR.PY ВСТАВИТ ТАБЛИЦУ ЗДЕСЬ -->
                         </div>
                     </div>
                 </div>
@@ -1067,7 +573,8 @@
                 document.querySelectorAll('.carousel-dots span').forEach((d, i) => d.classList.toggle('active', i === currentSlide));
             };
         })();
-                // Сортировка таблицы всех платин
+
+        // Сортировка таблицы всех платин
         (function() {
             const table = document.querySelector('.all-plat-table');
             if (!table) return;
@@ -1079,40 +586,29 @@
                 });
             });
 
-            let sortDirection = {}; // направление сортировки для каждой колонки
+            let sortDirection = {};
 
             function sortTable(colIndex, th) {
                 const tbody = table.querySelector('tbody');
                 const rows = Array.from(tbody.querySelectorAll('tr'));
-
-                // Определяем направление
                 if (!sortDirection[colIndex]) sortDirection[colIndex] = 'asc';
                 else sortDirection[colIndex] = sortDirection[colIndex] === 'asc' ? 'desc' : 'asc';
                 const dir = sortDirection[colIndex];
-
-                // Убираем активные классы с других заголовков
                 headers.forEach(h => h.classList.remove('sorted-asc', 'sorted-desc'));
                 th.classList.add(dir === 'asc' ? 'sorted-asc' : 'sorted-desc');
-
-                // Сортируем строки
                 rows.sort((a, b) => {
                     const aVal = a.cells[colIndex].textContent.trim();
                     const bVal = b.cells[colIndex].textContent.trim();
-                    // Пробуем сортировать как числа
                     const aNum = parseFloat(aVal);
                     const bNum = parseFloat(bVal);
                     if (!isNaN(aNum) && !isNaN(bNum)) {
                         return dir === 'asc' ? aNum - bNum : bNum - aNum;
                     }
-                    // Иначе как строки
                     return dir === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
                 });
-
-                // Пересобираем таблицу
                 rows.forEach(row => tbody.appendChild(row));
             }
 
-            // Стили для сортировки
             const style = document.createElement('style');
             style.textContent = `
                 .all-plat-table th.sorted-asc::after { content: ' ▲'; }
