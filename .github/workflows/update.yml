@@ -1,28 +1,51 @@
-name: Обновление платин
+name: Update Site
 
 on:
-  schedule:
-    - cron: '0 */6 * * *'   # каждые 6 часов
+  # Запуск при пуше в ветку main
+  push:
+    branches:
+      - main
+    # Запускать только при изменении важных файлов
+    paths:
+      - 'data.json'
+      - 'proofs/**'
+      - 'generator.py'
+  # Ручной запуск из интерфейса GitHub
   workflow_dispatch:
+  # Регулярный запуск, например, раз в день (опционально)
+  schedule:
+    - cron: '0 0 * * *' # каждый день в 00:00 UTC
 
 jobs:
-  update:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - name: Set up Python
+      # 1. Клонируем репозиторий
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      # 2. Устанавливаем Python
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.11'
+          cache: 'pip'
+
+      # 3. Устанавливаем зависимости
       - name: Install dependencies
-        run: pip install requests beautifulsoup4
-      - name: Download covers
-        run: python download_covers.py
-      - name: Generate HTML
-        run: python generator.py
-      - name: Commit and push if changed
         run: |
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
-          git add -A
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update $(date +'%Y-%m-%d %H:%M')" && git push)
+          pip install -r requirements.txt
+
+      # 4. Запускаем генератор
+      - name: Run generator
+        run: python generator.py
+
+      # 5. Отправляем изменения обратно в репозиторий
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add index.html
+          git commit -m "Auto-update index.html" || echo "No changes to commit"
+          git push
